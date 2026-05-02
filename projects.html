@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Aparna</title>
+  </head>
+  <body class="projects">
+    <header class="mark">
+      <a href="/">
+        <span class="mark__dot"></span>
+        Aparna
+      </a>
+    </header>
+
+    <nav class="mini-nav">
+      <a href="/" aria-label="Home" id="nav-home"></a>
+      <a href="/projects.html" class="is-current" aria-label="Projects" id="nav-projects"></a>
+      <a href="/info.html" aria-label="Info" id="nav-info"></a>
+    </nav>
+
+    <main class="projects__field" id="field"></main>
+
+    <p class="projects__caption">Hover to reveal · Click to open</p>
+
+    <script type="module" src="/src/projects.js"></script>
+    <script type="module">
+      import { glyphs } from '/src/glyphs.js'
+      document.getElementById('nav-home').innerHTML     = glyphs.home
+      document.getElementById('nav-projects').innerHTML = glyphs.dots3
+      document.getElementById('nav-info').innerHTML     = glyphs.infoI
+    </script>
+  </body>
+</html>

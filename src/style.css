@@ -1,296 +1,336 @@
+/* =========================================================
+   Design tokens
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Palette — soft cream + lilac */
+  --bg:           #FBFAF7;
+  --bg-warm:      #F6F1EE;
+  --lilac-1:      #F2E9F5;   /* lightest veil */
+  --lilac-2:      #E8DDF0;   /* main pod tint */
+  --lilac-3:      #D8C7E4;   /* pod edge */
+  --lilac-4:      #B6A0C8;   /* glyph */
+  --ink:          #6B5F76;   /* body text */
+  --ink-muted:    #A89FB0;
+  --ink-soft:     #C7BDD0;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Type */
+  --sans: 'Manrope', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
+  /* Easing */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  text-rendering: optimizeLegibility;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#app {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
+html, body {
+  margin: 0;
   padding: 0;
-  display: flex;
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   Top corner mark — site-wide
+   ========================================================= */
+.mark {
+  position: fixed;
+  top: 28px;
+  left: 32px;
+  z-index: 100;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  color: var(--ink);
+  mix-blend-mode: multiply;
+}
+
+.mark a {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-  margin: 32px 0 0;
+}
 
-  .logo {
-    height: 18px;
-  }
+.mark__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lilac-4);
+  display: inline-block;
+}
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
+/* =========================================================
+   Mini nav (top-right) — used on sub-pages
+   ========================================================= */
+.mini-nav {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 100;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
+.mini-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--lilac-2);
+  color: var(--lilac-4);
+  transition:
+    transform 0.5s var(--ease-out),
+    background 0.4s var(--ease-out);
+}
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+.mini-nav a:hover {
+  transform: scale(1.08);
+  background: var(--lilac-3);
+}
 
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
+.mini-nav a.is-current {
+  background: transparent;
+  color: var(--ink-muted);
+}
 
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
+.mini-nav svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================================================
+   Landing page
+   ========================================================= */
+.landing {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: #FFFCFA;     /* slightly warmer for the petal scene */
+  overflow: hidden;
+}
+
+/* Interactive petal canvas — fills viewport, sits behind everything */
+.petals {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;     /* pods/mark stay clickable */
+  display: block;
+}
+
+.cluster {
+  position: relative;
+  z-index: 1;
+  width: min(800px, 90vw);
+  aspect-ratio: 1.1 / 1;
+}
+
+/* On the petal-heavy landing, soften pod tint slightly so petals read */
+.landing .blob__shape {
+  background: rgba(244, 219, 230, 0.55);   /* warm pink wash */
+  backdrop-filter: blur(2px);
+}
+.landing .blob__veil {
+  background: rgba(244, 219, 230, 0.55);
+}
+
+.cluster__pod {
+  position: absolute;
+}
+
+/* Triangle composition: top, bottom-left, bottom-right */
+.cluster__pod--top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cluster__pod--left {
+  bottom: 6%;
+  left: 0;
+}
+.cluster__pod--right {
+  bottom: 6%;
+  right: 0;
+}
+
+/* Two small accent bubbles in the center gutter */
+.cluster__accent {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0.85;
+}
+.cluster__accent--mid {
+  bottom: 14%;
+  width: 56px;
+  height: 56px;
+}
+.cluster__accent--low {
+  bottom: 4%;
+  width: 38px;
+  height: 38px;
+}
+.cluster__accent .blob__shape {
+  background: var(--lilac-1);
+}
+.cluster__accent svg {
+  width: 50%;
+  height: 50%;
+  color: var(--lilac-4);
+}
+
+@media (max-width: 720px) {
+  .cluster {
+    aspect-ratio: 0.78 / 1;
+    width: 92vw;
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+/* =========================================================
+   Projects page — scattered floating blobs
+   ========================================================= */
+.projects {
+  padding: 110px 4vw 160px;
+  position: relative;
 }
 
-.ticks {
+.projects__field {
   position: relative;
   width: 100%;
+  /* Tall enough for the scattered composition without clipping */
+  height: 1100px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+@media (max-width: 900px) {
+  .projects__field {
+    height: 1400px;
   }
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.projects__item {
+  position: absolute;
+}
+
+.projects__caption {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  z-index: 50;
+}
+
+/* =========================================================
+   Info page
+   ========================================================= */
+.info {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 120px 6vw 80px;
+}
+
+.info__inner {
+  max-width: 620px;
+  width: 100%;
+  position: relative;
+}
+
+.info__halo {
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 220px;
+  background: radial-gradient(ellipse at center,
+    rgba(216, 199, 228, 0.55),
+    rgba(216, 199, 228, 0) 65%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.info h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px;
+  color: var(--ink);
+}
+
+.info h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--lilac-4);
+}
+
+.info p {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+
+.info__contact {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid var(--lilac-2);
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  row-gap: 14px;
+  font-size: 14px;
+}
+
+.info__contact dt {
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11px;
+  padding-top: 3px;
+}
+
+.info__contact dd {
+  margin: 0;
+  color: var(--ink);
+}
+
+.info__contact a {
+  border-bottom: 1px solid var(--lilac-3);
+  transition: color 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+
+.info__contact a:hover {
+  color: var(--lilac-4);
+  border-color: var(--lilac-4);
 }
