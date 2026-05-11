@@ -7,10 +7,10 @@ export function mountNav(host) {
 
   host.innerHTML = `
     <nav class="cluster" aria-label="Primary">
-      <a class="pod pod--top"   href="/projects.html"          aria-label="Contact">
+      <a class="pod pod--top"   href="projects.html"          aria-label="Contact">
         <span class="pod__icon">${glyphs.dots3}</span>
       </a>
-      <a class="pod pod--left"  href="/projects.html#archive"  aria-label="Experiments">
+      <a class="pod pod--left"  href="projects.html#archive"  aria-label="Experiments">
         <span class="pod__icon">${glyphs.flower4}</span>
       </a>
       <span class="pod pod--right" data-action="work" aria-label="Work" role="button" tabindex="0">
