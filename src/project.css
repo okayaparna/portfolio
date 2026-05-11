@@ -78,9 +78,20 @@ body.project-page.theme-dark.contrast-high {
   --ink-muted: #ccc;
 }
 
+body.project-page.theme-mid.contrast-high {
+  --ink: #fff;
+  --ink-muted: #ccc;
+}
+
 body.project-page.contrast-low {
   --ink: #9a9a9a;
   --ink-muted: #bbb;
+}
+
+body.project-page.theme-dark.contrast-low,
+body.project-page.theme-mid.contrast-low {
+  --ink: #6a6474;
+  --ink-muted: #544e5e;
 }
 
 /* Nav */
@@ -103,20 +114,33 @@ body.project-page.contrast-low {
   text-decoration: none;
 }
 
-.project-nav__links {
+.project-nav__pods {
   display: flex;
-  gap: 32px;
+  gap: 12px;
+  align-items: center;
 }
 
-.project-nav__links a {
-  font-size: 14px;
-  color: var(--ink-muted);
+.project-pod {
+  width: 56px;
+  height: 68px;
+  border-radius: 30px;
+  background: var(--lilac-2);
+  color: var(--lilac-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-out);
 }
 
-.project-nav__links a:hover {
-  color: var(--ink);
+.project-pod svg {
+  width: 28px;
+  height: 28px;
+}
+
+.project-pod:hover {
+  background: var(--lilac-3);
+  transform: scale(1.06);
 }
 
 /* Project header — two-column layout matching Framer */
@@ -159,7 +183,7 @@ body.project-page.contrast-low {
   font-size: calc(36px * var(--text-scale));
   font-weight: 400;
   line-height: 1.2;
-  color: #000;
+  color: var(--ink);
   letter-spacing: -0.48px;
   margin-bottom: 12px;
 }
@@ -276,9 +300,9 @@ body.project-page.contrast-low {
   bottom: 60px;
   right: 0;
   width: 255px;
-  background: rgba(255, 255, 255, 0.67);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
@@ -298,11 +322,17 @@ body.project-page.contrast-low {
   pointer-events: auto;
 }
 
+/* Dark/mid panel override */
+body.project-page.theme-dark .modal-widget__panel,
+body.project-page.theme-mid .modal-widget__panel {
+  background: rgba(30, 26, 40, 0.85);
+}
+
 /* Project title */
 .mw__project-title {
   font-family: var(--serif);
   font-size: 16px;
-  color: #7b7085;
+  color: var(--ink);
 }
 
 /* Divider */
@@ -346,7 +376,7 @@ body.project-page.contrast-low {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #afa4b4;
+  color: var(--ink-muted);
 }
 
 .mw__section-links {
@@ -377,7 +407,7 @@ body.project-page.contrast-low {
   border: 1px solid var(--lilac-3);
   border-radius: 6px;
   background: var(--bg);
-  color: #afa4b4;
+  color: var(--ink-muted);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
@@ -440,11 +470,16 @@ body.project-page.contrast-low {
   .project-nav {
     padding: 20px 24px;
   }
-  .project-nav__links {
-    gap: 20px;
+  .project-nav__pods {
+    gap: 8px;
   }
-  .project-nav__links a {
-    font-size: 12px;
+  .project-pod {
+    width: 48px;
+    height: 58px;
+  }
+  .project-pod svg {
+    width: 24px;
+    height: 24px;
   }
   .project__header {
     padding: 40px 24px 24px;
