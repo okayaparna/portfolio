@@ -123,31 +123,40 @@ body.project-page.theme-mid.contrast-low {
 
 .project-nav__pods {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
 
 .project-pod {
-  width: 56px;
-  height: 68px;
-  border-radius: 30px;
-  background: var(--lilac-2);
+  width: 70px;
+  height: 86px;
+  border-radius: 999px;
+  background: rgba(232, 221, 240, 0.78);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(216, 199, 228, 0.55);
   color: var(--lilac-4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow:
+    inset 0 0 16px rgba(255, 255, 255, 0.45),
+    0 8px 24px -10px rgba(120, 90, 110, 0.28);
+  display: grid;
+  place-items: center;
   text-decoration: none;
-  transition: background 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  transition:
+    transform 0.5s var(--ease-out),
+    background 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
 }
 
 .project-pod svg {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 }
 
 .project-pod:hover {
-  background: var(--lilac-3);
-  transform: scale(1.06);
+  transform: scale(1.08);
+  background: rgba(216, 199, 228, 0.92);
+  color: var(--ink);
 }
 
 /* Project header — two-column layout matching Framer */
@@ -484,12 +493,8 @@ body.project-page.theme-mid .modal-widget__panel {
     gap: 8px;
   }
   .project-pod {
-    width: 48px;
-    height: 58px;
-  }
-  .project-pod svg {
-    width: 24px;
-    height: 24px;
+    width: 60px;
+    height: 74px;
   }
   .project__header {
     padding: 40px 24px 24px;
