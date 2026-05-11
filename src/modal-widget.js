@@ -35,9 +35,9 @@ export function mountModalWidget() {
       <div class="mw__divider"></div>
 
       <div class="mw__nav-row">
-        <a class="mw__nav-arrow" href="${currentIdx > 0 ? '/' + PROJECTS[currentIdx - 1].slug + '.html' : '#'}" ${currentIdx <= 0 ? 'aria-disabled="true"' : ''}>← Prev</a>
+        <a class="mw__nav-arrow" href="${currentIdx > 0 ? PROJECTS[currentIdx - 1].slug + '.html' : '#'}" ${currentIdx <= 0 ? 'aria-disabled="true"' : ''}>← Prev</a>
         <span class="mw__nav-count">${currentIdx + 1} / ${PROJECTS.length}</span>
-        <a class="mw__nav-arrow" href="${currentIdx < PROJECTS.length - 1 ? '/' + PROJECTS[currentIdx + 1].slug + '.html' : '#'}" ${currentIdx >= PROJECTS.length - 1 ? 'aria-disabled="true"' : ''}>Next →</a>
+        <a class="mw__nav-arrow" href="${currentIdx < PROJECTS.length - 1 ? PROJECTS[currentIdx + 1].slug + '.html' : '#'}" ${currentIdx >= PROJECTS.length - 1 ? 'aria-disabled="true"' : ''}>Next →</a>
       </div>
 
       <div class="mw__label">Sections</div>
