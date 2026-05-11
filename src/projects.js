@@ -2,26 +2,27 @@ import './style.css'
 import './blob.css'
 import { createBlob } from './blob.js'
 
-// Placeholder project list.
-// Replace `image` with real assets once you have them; same for title/desc.
+// Staggered scroll composition — alternates left/right with varying sizes.
+// `xPct` is the LEFT edge of each blob as % of the projects field.
+// `y` is absolute top in px.
 const projects = [
-  { title: 'Index One',    image: 'https://picsum.photos/seed/wip-prj-1/700/700', x: 6,   y: 4,  w: 300, h: 320 },
-  { title: 'Soft Surface', image: 'https://picsum.photos/seed/wip-prj-2/700/700', x: 38,  y: 12, w: 240, h: 280 },
-  { title: 'Membrane',     image: 'https://picsum.photos/seed/wip-prj-3/700/700', x: 70,  y: 2,  w: 280, h: 320 },
-  { title: 'Lattice',      image: 'https://picsum.photos/seed/wip-prj-4/700/700', x: 18,  y: 42, w: 320, h: 360 },
-  { title: 'Tide',         image: 'https://picsum.photos/seed/wip-prj-5/700/700', x: 56,  y: 38, w: 280, h: 320 },
-  { title: 'Halftone',     image: 'https://picsum.photos/seed/wip-prj-6/700/700', x: 4,   y: 78, w: 220, h: 240 },
-  { title: 'Bloom',        image: 'https://picsum.photos/seed/wip-prj-7/700/700', x: 44,  y: 76, w: 260, h: 280 },
-  { title: 'Ferment',      image: 'https://picsum.photos/seed/wip-prj-8/700/700', x: 76,  y: 64, w: 240, h: 300 },
+  { title: 'Index One',    image: 'https://picsum.photos/seed/wip-prj-1/900/900', xPct: 8,  y: 40,   w: 460, h: 520 },
+  { title: 'Soft Surface', image: 'https://picsum.photos/seed/wip-prj-2/800/800', xPct: 56, y: 210,  w: 360, h: 400 },
+  { title: 'Membrane',     image: 'https://picsum.photos/seed/wip-prj-3/800/800', xPct: 4,  y: 600,  w: 320, h: 360 },
+  { title: 'Lattice',      image: 'https://picsum.photos/seed/wip-prj-4/900/900', xPct: 48, y: 720,  w: 480, h: 520 },
+  { title: 'Tide',         image: 'https://picsum.photos/seed/wip-prj-5/900/900', xPct: 12, y: 1180, w: 420, h: 440 },
+  { title: 'Halftone',     image: 'https://picsum.photos/seed/wip-prj-6/800/800', xPct: 60, y: 1320, w: 360, h: 400 },
+  { title: 'Bloom',        image: 'https://picsum.photos/seed/wip-prj-7/900/900', xPct: 26, y: 1720, w: 440, h: 480 },
+  { title: 'Ferment',      image: 'https://picsum.photos/seed/wip-prj-8/800/800', xPct: 64, y: 1880, w: 340, h: 380 },
 ]
 
 const field = document.getElementById('field')
 
-projects.forEach((p, i) => {
+const items = projects.map((p, i) => {
   const item = document.createElement('div')
   item.className = 'projects__item'
-  item.style.left = `${p.x}%`
-  item.style.top  = `${p.y}%`
+  item.style.left = `${p.xPct}%`
+  item.style.top  = `${p.y}px`
 
   item.appendChild(createBlob({
     href: `#${p.title.toLowerCase().replace(/\s+/g, '-')}`,
@@ -34,4 +35,17 @@ projects.forEach((p, i) => {
   }))
 
   field.appendChild(item)
+  return item
 })
+
+// Scroll-in animation
+const io = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-in')
+      io.unobserve(entry.target)
+    }
+  }
+}, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 })
+
+items.forEach((el) => io.observe(el))
