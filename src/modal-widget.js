@@ -1,12 +1,12 @@
 const PROJECTS = [
-  { slug: 'wired_rebrand', title: 'Wired Rebrand' },
-  { slug: 'candor', title: 'Candor' },
-  { slug: 'twingate', title: 'Twingate' },
-  { slug: 'tns-commencement-2025', title: 'TNS Commencement 2025' },
-  { slug: 'parsons-benefit-2024', title: 'Parsons Benefit 2024' },
+  { slug: 'align-with-ash', title: 'Align with Ash' },
+  { slug: 'phia-rewards', title: 'Phia Rewards' },
   { slug: 'disciple', title: 'Disciple' },
+  { slug: 'tns-commencement-2025', title: 'The New School Commencement 2025' },
+  { slug: 'parsons-benefit-2024', title: 'The 75th Parsons Benefit' },
+  { slug: 'wired-rebrand', title: 'WIRED Magazine Rebrand' },
+  { slug: 'twingate', title: 'Twingate' },
   { slug: 'gundi-studios', title: 'Gundi Studios' },
-  { slug: 'playground', title: 'Playground' },
 ]
 
 export function mountModalWidget() {

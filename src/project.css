@@ -119,22 +119,39 @@ body.project-page.contrast-low {
   color: var(--ink);
 }
 
-/* Project header — matches Figma card structure */
+/* Project header — two-column layout matching Framer */
 .project__header {
   padding: 60px 48px 40px;
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
 }
 
-.project__meta-line {
+.project__header-left {
+  flex: 1;
+}
+
+.project__header-right {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 48px;
+  min-width: 340px;
+}
+
+.project__tag {
+  display: inline-block;
   font-family: var(--sans);
-  font-size: 14px;
-  color: #989898;
-  margin-bottom: 12px;
-}
-
-.project__meta-dot {
-  margin: 0 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  border: 1px solid var(--lilac-3);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 16px;
 }
 
 .project__title {
@@ -147,11 +164,33 @@ body.project-page.contrast-low {
   margin-bottom: 12px;
 }
 
-.project__desc {
+.project__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--sans);
-  font-size: 16px;
-  color: #989898;
-  line-height: 1.4;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+.project__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+}
+
+.project__meta-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+.project__meta-value {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
 }
 
 /* Hero */
@@ -409,6 +448,12 @@ body.project-page.contrast-low {
   }
   .project__header {
     padding: 40px 24px 24px;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .project__header-right {
+    min-width: unset;
+    width: 100%;
   }
   .project__title {
     font-size: calc(28px * var(--text-scale));
