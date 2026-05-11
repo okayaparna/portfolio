@@ -119,62 +119,39 @@ body.project-page.contrast-low {
   color: var(--ink);
 }
 
-/* Project header */
+/* Project header — matches Figma card structure */
 .project__header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  padding: 80px 48px 60px;
+  padding: 60px 48px 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.project__tag {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--lilac-4);
-  background: var(--lilac-2);
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-bottom: 16px;
+.project__meta-line {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: #989898;
+  margin-bottom: 12px;
+}
+
+.project__meta-dot {
+  margin: 0 4px;
 }
 
 .project__title {
   font-family: var(--serif);
-  font-size: calc(48px * var(--text-scale));
-  font-weight: 300;
-  line-height: 1.1;
-  color: var(--ink);
-  margin-bottom: 16px;
+  font-size: calc(36px * var(--text-scale));
+  font-weight: 400;
+  line-height: 1.2;
+  color: #000;
+  letter-spacing: -0.48px;
+  margin-bottom: 12px;
 }
 
-.project__status {
-  font-size: 13px;
-  color: var(--ink-muted);
-}
-
-.project__meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.project__meta-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted);
-  margin-bottom: 4px;
-}
-
-.project__meta-value {
-  font-size: 14px;
-  color: var(--ink);
+.project__desc {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: #989898;
+  line-height: 1.4;
 }
 
 /* Hero */
@@ -431,12 +408,10 @@ body.project-page.contrast-low {
     font-size: 12px;
   }
   .project__header {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 40px 24px 40px;
+    padding: 40px 24px 24px;
   }
   .project__title {
-    font-size: calc(36px * var(--text-scale));
+    font-size: calc(28px * var(--text-scale));
   }
   .project__hero {
     padding: 0 24px;

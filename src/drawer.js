@@ -1,12 +1,12 @@
 const PROJECTS = [
-  { title: 'Wired Rebrand', href: '/wired_rebrand.html' },
-  { title: 'Candor', href: '/candor.html' },
-  { title: 'Twingate', href: '/twingate.html' },
-  { title: 'TNS Commencement 2025', href: '/tns-commencement-2025.html' },
-  { title: 'Parsons Benefit 2024', href: '/parsons-benefit-2024.html' },
-  { title: 'Disciple', href: '/disciple.html' },
-  { title: 'Gundi Studios', href: '/gundi-studios.html' },
-  { title: 'Playground', href: '/playground.html' },
+  { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: '/candor.html' },
+  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: '/playground.html' },
+  { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: '/disciple.html' },
+  { title: 'The New School Commencement 2025', meta: ['The New School', 'Fall 2025'], desc: "Celebrating Unity through Intersectionality at The New School's 89th Commencement", href: '/tns-commencement-2025.html' },
+  { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: '/parsons-benefit-2024.html' },
+  { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: '/wired_rebrand.html' },
+  { title: 'Twingate', meta: ['Twingate', 'Summer 2024'], desc: 'Designing for prioritizing Information Hierarchy and Reducing navigational Friction for an enterprise product', href: '/twingate.html' },
+  { title: 'Gundi Studios', meta: ['GUNDI STUDIOS', 'Spring 2024'], desc: "Adding \"oomph\" to an incredible South Asian Couture brand's digital presence.", href: '/gundi-studios.html' },
 ]
 
 let drawerEl = null
@@ -14,7 +14,6 @@ let gooWrap = null
 let isOpen = false
 
 export function createDrawer() {
-  // Goo wrapper applies SVG filter during animation
   gooWrap = document.createElement('div')
   gooWrap.className = 'drawer-goo-wrap'
 
@@ -40,12 +39,22 @@ export function createDrawer() {
     const img = document.createElement('div')
     img.className = 'drawer__card-image'
 
+    const meta = document.createElement('div')
+    meta.className = 'drawer__card-meta'
+    meta.innerHTML = project.meta.join(' <span class="drawer__card-dot">•</span> ')
+
     const title = document.createElement('div')
     title.className = 'drawer__card-title'
     title.textContent = project.title
 
+    const desc = document.createElement('div')
+    desc.className = 'drawer__card-desc'
+    desc.textContent = project.desc
+
     card.appendChild(img)
+    card.appendChild(meta)
     card.appendChild(title)
+    card.appendChild(desc)
     grid.appendChild(card)
   }
 
@@ -81,7 +90,6 @@ export function openDrawer(onCloseCallback) {
     if (onCloseCallback) onCloseCallback()
   }
 
-  // Get Work pod position for origin
   const pod = document.querySelector('.pod--right')
   if (pod) {
     const r = pod.getBoundingClientRect()
@@ -90,7 +98,6 @@ export function openDrawer(onCloseCallback) {
     drawerEl.style.transformOrigin = `${cx}px ${cy}px`
   }
 
-  // Apply goo filter during opening animation
   gooWrap.classList.add('is-gooing')
 
   requestAnimationFrame(() => {
@@ -98,7 +105,6 @@ export function openDrawer(onCloseCallback) {
     isOpen = true
   })
 
-  // Remove goo filter after animation completes (it causes text blur)
   setTimeout(() => {
     gooWrap.classList.remove('is-gooing')
   }, 700)

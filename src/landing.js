@@ -5,81 +5,6 @@ import { mountControls } from './controls.js'
 import { mountNav, minimizePods, restorePods } from './nav.js'
 import { createDrawer, openDrawer, closeDrawer } from './drawer.js'
 
-// Viewport edge blur overlays — progressive glass + chromatic aberration
-;(function initEdgeBlur() {
-  // SVG filter for chromatic aberration (color channel displacement)
-  const svgNS = 'http://www.w3.org/2000/svg'
-  const svg = document.createElementNS(svgNS, 'svg')
-  svg.setAttribute('width', '0')
-  svg.setAttribute('height', '0')
-  svg.style.position = 'absolute'
-  svg.innerHTML = `
-    <defs>
-      <filter id="chromatic-aberration" x="-10%" y="-10%" width="120%" height="120%">
-        <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red"/>
-        <feOffset in="red" dx="3" dy="0" result="red-shifted"/>
-        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="green"/>
-        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue"/>
-        <feOffset in="blue" dx="-3" dy="0" result="blue-shifted"/>
-        <feBlend in="red-shifted" in2="green" mode="screen" result="rg"/>
-        <feBlend in="rg" in2="blue-shifted" mode="screen"/>
-      </filter>
-    </defs>
-  `
-  document.body.appendChild(svg)
-
-  const LAYERS = 8
-
-  function createBlurStrip(position) {
-    const strip = document.createElement('div')
-    strip.className = `edge-blur edge-blur--${position}`
-
-    for (let i = 0; i < LAYERS; i++) {
-      const layer = document.createElement('div')
-      layer.className = 'edge-blur__layer'
-
-      // Stronger progressive blur: 0.5px → 24px
-      const blur = 0.5 * Math.pow(2, i * 0.75)
-      // Each layer covers a portion of the strip with overlap
-      const bandStart = (i / LAYERS) * 100
-      const bandEnd = ((i + 2) / LAYERS) * 100
-
-      layer.style.backdropFilter = `blur(${blur}px)`
-      layer.style.webkitBackdropFilter = `blur(${blur}px)`
-
-      const grad = position === 'top'
-        ? `linear-gradient(to bottom, black ${bandStart}%, transparent ${Math.min(bandEnd, 100)}%)`
-        : `linear-gradient(to top, black ${bandStart}%, transparent ${Math.min(bandEnd, 100)}%)`
-
-      layer.style.maskImage = grad
-      layer.style.webkitMaskImage = grad
-      strip.appendChild(layer)
-    }
-
-    // Chromatic aberration overlay
-    const aberration = document.createElement('div')
-    aberration.className = 'edge-blur__aberration'
-    const abMask = position === 'top'
-      ? 'linear-gradient(to bottom, black 0%, transparent 80%)'
-      : 'linear-gradient(to top, black 0%, transparent 80%)'
-    aberration.style.maskImage = abMask
-    aberration.style.webkitMaskImage = abMask
-    aberration.style.backdropFilter = 'blur(6px)'
-    aberration.style.webkitBackdropFilter = 'blur(6px)'
-    strip.appendChild(aberration)
-
-    // Frosted glass overlay
-    const frost = document.createElement('div')
-    frost.className = 'edge-blur__frost'
-    strip.appendChild(frost)
-
-    document.body.appendChild(strip)
-  }
-
-  createBlurStrip('top')
-  createBlurStrip('bottom')
-})()
-
 // Petal field — real WebGL 3D scene
 const petalContainer = document.getElementById('petals')
 if (petalContainer) {
@@ -187,7 +112,7 @@ document.addEventListener('click', (e) => {
   function tick() {
     for (const c of chars) {
       if (c.life <= 0) continue
-      c.life -= 0.025
+      c.life -= 0.012
       if (c.life <= 0) {
         c.el.style.opacity = '0'
       } else {
