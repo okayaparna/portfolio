@@ -98,7 +98,7 @@ body.project-page.theme-mid.contrast-low {
 .project-nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 28px 48px;
   position: sticky;
   top: 0;
@@ -107,11 +107,18 @@ body.project-page.theme-mid.contrast-low {
 }
 
 .project-nav__logo {
+  position: absolute;
+  left: 48px;
   font-family: var(--serif);
   font-size: 20px;
   font-weight: 300;
-  color: var(--ink);
+  color: var(--ink-muted);
   text-decoration: none;
+  transition: color 0.2s;
+}
+
+.project-nav__logo:hover {
+  color: var(--ink);
 }
 
 .project-nav__pods {
@@ -469,6 +476,9 @@ body.project-page.theme-mid .modal-widget__panel {
 @media (max-width: 600px) {
   .project-nav {
     padding: 20px 24px;
+  }
+  .project-nav__logo {
+    left: 24px;
   }
   .project-nav__pods {
     gap: 8px;
