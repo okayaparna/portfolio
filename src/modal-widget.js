@@ -14,6 +14,11 @@ export function mountModalWidget() {
   const currentIdx = PROJECTS.findIndex(p => p.slug === currentSlug)
   const currentTitle = currentIdx >= 0 ? PROJECTS[currentIdx].title : 'Project'
 
+  const prevHref = currentIdx > 0 ? PROJECTS[currentIdx - 1].slug + '.html' : '#'
+  const nextHref = currentIdx < PROJECTS.length - 1 ? PROJECTS[currentIdx + 1].slug + '.html' : '#'
+  const prevDisabled = currentIdx <= 0
+  const nextDisabled = currentIdx >= PROJECTS.length - 1
+
   const widget = document.createElement('div')
   widget.className = 'modal-widget'
   widget.innerHTML = `
@@ -31,20 +36,18 @@ export function mountModalWidget() {
       </svg>
     </button>
     <div class="modal-widget__panel">
+      <div class="mw__nav-row">
+        <a class="mw__nav-arrow" href="${prevHref}" ${prevDisabled ? 'aria-disabled="true"' : ''}>Prev</a>
+        <a class="mw__nav-arrow" href="${nextHref}" ${nextDisabled ? 'aria-disabled="true"' : ''}>Next</a>
+      </div>
+
       <div class="mw__project-title">${currentTitle}</div>
       <div class="mw__divider"></div>
 
-      <div class="mw__nav-row">
-        <a class="mw__nav-arrow" href="${currentIdx > 0 ? PROJECTS[currentIdx - 1].slug + '.html' : '#'}" ${currentIdx <= 0 ? 'aria-disabled="true"' : ''}>← Prev</a>
-        <span class="mw__nav-count">${currentIdx + 1} / ${PROJECTS.length}</span>
-        <a class="mw__nav-arrow" href="${currentIdx < PROJECTS.length - 1 ? PROJECTS[currentIdx + 1].slug + '.html' : '#'}" ${currentIdx >= PROJECTS.length - 1 ? 'aria-disabled="true"' : ''}>Next →</a>
-      </div>
-
-      <div class="mw__label">Sections</div>
+      <div class="mw__label">Quick Links</div>
       <div class="mw__section-links"></div>
 
-      <button class="mw__summarize-btn">Summarize</button>
-      <div class="mw__summary-text" hidden></div>
+      <button class="mw__tldr-btn">TL;DR</button>
 
       <div class="mw__divider"></div>
 
@@ -73,6 +76,7 @@ export function mountModalWidget() {
         </div>
       </div>
     </div>
+    <div class="mw__tldr-panel"></div>
   `
 
   document.body.appendChild(widget)
@@ -84,12 +88,14 @@ export function mountModalWidget() {
     isOpen = !isOpen
     widget.classList.toggle('is-open', isOpen)
     if (isOpen) buildSectionLinks()
+    if (!isOpen) closeTldr()
   })
 
   document.addEventListener('click', (e) => {
     if (isOpen && !widget.contains(e.target)) {
       isOpen = false
       widget.classList.remove('is-open')
+      closeTldr()
     }
   })
 
@@ -111,18 +117,32 @@ export function mountModalWidget() {
     })
   }
 
-  const summarizeBtn = widget.querySelector('.mw__summarize-btn')
-  const summaryText = widget.querySelector('.mw__summary-text')
-  summarizeBtn.addEventListener('click', () => {
-    const content = document.querySelector('.project__content')
-    if (!content) return
-    const paragraphs = content.querySelectorAll('p')
-    const firstTwo = Array.from(paragraphs).slice(0, 2).map(p => p.textContent).join(' ')
-    const summary = firstTwo.length > 200 ? firstTwo.slice(0, 200) + '…' : firstTwo
-    summaryText.textContent = summary
-    summaryText.hidden = !summaryText.hidden
+  // TL;DR side panel
+  const tldrBtn = widget.querySelector('.mw__tldr-btn')
+  const tldrPanel = widget.querySelector('.mw__tldr-panel')
+  let tldrOpen = false
+
+  tldrBtn.addEventListener('click', () => {
+    if (tldrOpen) {
+      closeTldr()
+    } else {
+      const content = document.querySelector('.project__content')
+      if (!content) return
+      const paragraphs = content.querySelectorAll('p')
+      const firstTwo = Array.from(paragraphs).slice(0, 2).map(p => p.textContent).join(' ')
+      const summary = firstTwo.length > 280 ? firstTwo.slice(0, 280) + '…' : firstTwo
+      tldrPanel.innerHTML = `<p>${summary}</p>`
+      tldrPanel.classList.add('is-visible')
+      tldrOpen = true
+    }
   })
 
+  function closeTldr() {
+    tldrPanel.classList.remove('is-visible')
+    tldrOpen = false
+  }
+
+  // Settings
   widget.querySelectorAll('.mw__setting-pills').forEach(group => {
     const setting = group.dataset.setting
     group.addEventListener('click', (e) => {

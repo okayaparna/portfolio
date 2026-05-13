@@ -37,6 +37,11 @@
   padding: 0;
 }
 
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
 body.project-page {
   background: var(--bg);
   color: var(--ink);
@@ -44,6 +49,30 @@ body.project-page {
   font-size: calc(16px * var(--text-scale));
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+}
+
+body.project-page > main {
+  padding-top: 120px;
+  animation: page-fade-in 0.5s var(--ease-out) both;
+}
+
+body.project-page > nav {
+  animation: page-fade-in 0.3s var(--ease-out) both;
+}
+
+body.project-page.is-leaving {
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+/* Neon green text selection */
+body.project-page ::selection {
+  background: #D3FF41;
+  color: #000;
+}
+body.project-page ::-moz-selection {
+  background: #D3FF41;
+  color: #000;
 }
 
 /* Theme modes */
@@ -99,18 +128,20 @@ body.project-page.theme-mid.contrast-low {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 48px;
-  position: sticky;
+  padding: 28px 32px;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: var(--bg);
+  background: transparent;
 }
 
 .project-nav__logo {
   position: absolute;
-  left: 48px;
+  left: 32px;
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: 40px;
   font-weight: 300;
   color: var(--ink-muted);
   text-decoration: none;
@@ -159,11 +190,30 @@ body.project-page.theme-mid.contrast-low {
   color: var(--ink);
 }
 
+/* Pod hover tooltip — cursor-following green pill */
+.pod-tooltip {
+  position: fixed;
+  white-space: nowrap;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 20px;
+  color: #000;
+  background: #D3FF41;
+  border-radius: 8px;
+  padding: 8px 24px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 200;
+  transition: opacity 0.25s var(--ease-out);
+  transform: translate(-50%, calc(-100% - 14px));
+}
+.pod-tooltip.is-visible {
+  opacity: 1;
+}
+
 /* Project header — two-column layout matching Framer */
 .project__header {
-  padding: 60px 48px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 60px 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -235,9 +285,8 @@ body.project-page.theme-mid.contrast-low {
 
 /* Hero */
 .project__hero {
-  padding: 0 48px;
-  max-width: 1200px;
-  margin: 0 auto 80px;
+  padding: 0 20px;
+  margin: 0 0 80px;
 }
 
 .project__hero-image {
@@ -247,23 +296,32 @@ body.project-page.theme-mid.contrast-low {
   border-radius: 12px;
 }
 
-/* Content */
+/* Content wrapper */
 .project__content {
-  max-width: 720px;
+  padding: 0 0 120px;
+}
+
+/* Text section — centered narrow column */
+.project__text {
+  max-width: 760px;
   margin: 0 auto;
-  padding: 0 48px 120px;
+  padding: 60px 20px;
+}
+
+.project__section-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
 }
 
 .project__content h2 {
   font-family: var(--serif);
   font-size: calc(28px * var(--text-scale));
   font-weight: 300;
-  margin: 48px 0 16px;
+  margin: 0 0 16px;
   color: var(--ink);
-}
-
-.project__content h2:first-child {
-  margin-top: 0;
+  scroll-margin-top: 120px;
 }
 
 .project__content p {
@@ -271,6 +329,86 @@ body.project-page.theme-mid.contrast-low {
   line-height: 1.7;
   color: var(--ink);
   margin-bottom: 24px;
+}
+
+.project__content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Full-width image — edge to edge with 20px margin */
+.project__image-full {
+  padding: 0 20px;
+  margin-bottom: 0;
+}
+
+.project__image-full img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.project__image-full .project__img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--lilac-2);
+  border-radius: 12px;
+}
+
+/* Image caption */
+.project__caption {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 8px;
+}
+
+/* Two-column image grid */
+.project__image-grid {
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.project__image-grid img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.project__image-grid .project__img-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--lilac-2);
+  border-radius: 12px;
+}
+
+/* Three-column image grid */
+.project__image-grid--3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Single column stack of images */
+.project__image-stack {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.project__image-stack img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.project__image-stack .project__img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--lilac-2);
+  border-radius: 12px;
 }
 
 /* Modal Widget — frosted glass panel (matches Figma node 35:172) */
@@ -369,11 +507,13 @@ body.project-page.theme-mid .modal-widget__panel {
   font-size: 13px;
   color: var(--ink);
   text-decoration: none;
-  transition: opacity 0.2s;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .mw__nav-arrow:hover {
-  opacity: 0.6;
+  background: rgba(248, 181, 192, 0.2);
 }
 
 .mw__nav-arrow[aria-disabled="true"] {
@@ -405,16 +545,18 @@ body.project-page.theme-mid .modal-widget__panel {
   font-size: 14px;
   color: var(--ink);
   text-decoration: none;
-  padding: 2px 0;
-  transition: opacity 0.2s;
+  padding: 6px 10px;
+  margin: 0 -10px;
+  border-radius: 6px;
+  transition: background 0.2s;
 }
 
 .mw__section-link:hover {
-  opacity: 0.6;
+  background: rgba(248, 181, 192, 0.2);
 }
 
-/* Summarize button */
-.mw__summarize-btn {
+/* TL;DR button */
+.mw__tldr-btn {
   width: 100%;
   padding: 6px 0;
   font-size: 14px;
@@ -428,18 +570,46 @@ body.project-page.theme-mid .modal-widget__panel {
   transition: background 0.2s, color 0.2s;
 }
 
-.mw__summarize-btn:hover {
+.mw__tldr-btn:hover {
   background: var(--lilac-2);
   color: var(--ink);
 }
 
-.mw__summary-text {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--ink-muted);
-  padding: 8px;
-  background: var(--bg);
-  border-radius: 6px;
+/* TL;DR side panel — opens to the left of the nav modal */
+.mw__tldr-panel {
+  position: absolute;
+  bottom: 60px;
+  right: calc(255px + 12px);
+  width: 280px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: scale(0.9) translateX(10px);
+  transform-origin: right center;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.mw__tldr-panel.is-visible {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  pointer-events: auto;
+}
+
+body.project-page.theme-dark .mw__tldr-panel,
+body.project-page.theme-mid .mw__tldr-panel {
+  background: rgba(30, 26, 40, 0.85);
+}
+
+.mw__tldr-panel p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0;
 }
 
 /* Setting rows — Theme / Text Size / Contrast */
@@ -484,10 +654,11 @@ body.project-page.theme-mid .modal-widget__panel {
 /* Mobile */
 @media (max-width: 600px) {
   .project-nav {
-    padding: 20px 24px;
+    padding: 20px 20px;
   }
   .project-nav__logo {
-    left: 24px;
+    left: 20px;
+    font-size: 32px;
   }
   .project-nav__pods {
     gap: 8px;
@@ -497,7 +668,7 @@ body.project-page.theme-mid .modal-widget__panel {
     height: 74px;
   }
   .project__header {
-    padding: 40px 24px 24px;
+    padding: 40px 20px 24px;
     flex-direction: column;
     gap: 32px;
   }
@@ -509,10 +680,19 @@ body.project-page.theme-mid .modal-widget__panel {
     font-size: calc(28px * var(--text-scale));
   }
   .project__hero {
-    padding: 0 24px;
+    padding: 0 20px;
     margin-bottom: 48px;
   }
   .project__content {
-    padding: 0 24px 80px;
+    padding: 0 0 80px;
+  }
+  .project__text {
+    padding: 40px 20px;
+  }
+  .project__image-grid {
+    grid-template-columns: 1fr;
+  }
+  .project__image-grid--3 {
+    grid-template-columns: 1fr;
   }
 }

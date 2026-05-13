@@ -90,36 +90,19 @@ export function openDrawer(onCloseCallback) {
     if (onCloseCallback) onCloseCallback()
   }
 
-  const pod = document.querySelector('.pod--right')
-  if (pod) {
-    const r = pod.getBoundingClientRect()
-    const cx = r.left + r.width / 2
-    const cy = r.top + r.height / 2
-    drawerEl.style.transformOrigin = `${cx}px ${cy}px`
-  }
-
-  gooWrap.classList.add('is-gooing')
-
   requestAnimationFrame(() => {
     drawerEl.classList.add('is-open')
     isOpen = true
   })
-
-  setTimeout(() => {
-    gooWrap.classList.remove('is-gooing')
-  }, 700)
 }
 
 export function closeDrawer() {
   if (!drawerEl || !isOpen) return
 
-  gooWrap.classList.add('is-gooing')
-
   return new Promise((resolve) => {
     drawerEl.classList.remove('is-open')
     isOpen = false
     setTimeout(() => {
-      gooWrap.classList.remove('is-gooing')
       resolve()
     }, 600)
   })

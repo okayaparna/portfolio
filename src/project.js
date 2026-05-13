@@ -4,6 +4,19 @@ import { mountModalWidget } from './modal-widget.js'
 
 mountModalWidget()
 
+// Smooth exit transition when navigating away
+;(function initExitTransition() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]')
+    if (!link) return
+    const href = link.getAttribute('href')
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http')) return
+    e.preventDefault()
+    document.body.classList.add('is-leaving')
+    setTimeout(() => { window.location.href = href }, 300)
+  })
+})()
+
 // Replace text nav with pod-based nav
 ;(function initProjectNav() {
   const nav = document.querySelector('.project-nav')
@@ -22,6 +35,51 @@ mountModalWidget()
     `
     nav.appendChild(pods)
   }
+})()
+
+// Pod hover tooltips — follow cursor (matching landing page behavior)
+;(function initPodTooltips() {
+  const tooltip = document.createElement('div')
+  tooltip.className = 'pod-tooltip'
+  document.body.appendChild(tooltip)
+
+  const labelMap = {
+    0: 'Info',
+    1: 'Experiments',
+    2: 'Projects',
+    3: 'About',
+  }
+
+  document.addEventListener('mouseover', (e) => {
+    const pod = e.target.closest('.project-pod')
+    if (!pod) {
+      tooltip.classList.remove('is-visible')
+      return
+    }
+    const pods = Array.from(document.querySelectorAll('.project-pod'))
+    const idx = pods.indexOf(pod)
+    if (idx >= 0 && labelMap[idx]) {
+      tooltip.textContent = labelMap[idx]
+      tooltip.classList.add('is-visible')
+    }
+  })
+
+  document.addEventListener('mouseout', (e) => {
+    const pod = e.target.closest('.project-pod')
+    if (pod && !pod.contains(e.relatedTarget)) {
+      tooltip.classList.remove('is-visible')
+    }
+    if (!e.target.closest('.project-pod') && !e.relatedTarget?.closest('.project-pod')) {
+      tooltip.classList.remove('is-visible')
+    }
+  })
+
+  document.addEventListener('mousemove', (e) => {
+    if (tooltip.classList.contains('is-visible')) {
+      tooltip.style.left = e.clientX + 'px'
+      tooltip.style.top = e.clientY + 'px'
+    }
+  })
 })()
 
 // Neon green custom cursor + glitchy character trail (shared with landing)

@@ -11,22 +11,24 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 // ---------- Default config (all live-tunable) -------------------------------
 export const DEFAULTS = {
   count:        95,
-  scaleMin:     0.28,
-  scaleMax:     0.70,
-  depthMin:     0.55,
-  depthMax:     1.10,
-  gravity:      0.00003,
-  drift:        0.0006,
-  damping:      0.995,
-  rotationSpd:  0.015,    // baseline angular velocity range
-  initialFall:  0.0026,   // baseline downward velocity at spawn
-  mouseRadius:  2.2,
-  mouseForce:   0.025,
+  scaleMin:     0.43,
+  scaleMax:     0.79,
+  depthMin:     0.75,
+  depthMax:     1.15,
+  gravity:      0.00012,
+  drift:        0.0003,
+  damping:      0.962,
+  rotationSpd:  0.003,
+  initialFall:  0.0100,
+  mouseRadius:  1.10,
+  mouseForce:   0.005,
   mouseEnabled: true,
   paused:       false,
-  keyIntensity: 0.9,
-  envIntensity: 0.9,
+  keyIntensity: 0.80,
+  envIntensity: 0.80,
   exposure:     1.05,
+  repelRadius:  1.2,
+  repelForce:   0.006,
 }
 
 // ---------- Petal geometry --------------------------------------------------
@@ -40,43 +42,84 @@ function petalSurface(u, v, target) {
   target.set(x, y, z)
 }
 
+// ---------- Brushed metal normal map (procedural) ----------------------------
+function generateBrushedNormalMap() {
+  const size = 256
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')
+
+  ctx.fillStyle = 'rgb(128, 128, 255)'
+  ctx.fillRect(0, 0, size, size)
+
+  const imageData = ctx.getImageData(0, 0, size, size)
+  const data = imageData.data
+
+  for (let y = 0; y < size; y++) {
+    const lineStrength = (Math.random() - 0.5) * 100
+    for (let x = 0; x < size; x++) {
+      const i = (y * size + x) * 4
+      const grain = (Math.random() - 0.5) * 50
+      data[i]     = Math.max(0, Math.min(255, 128 + lineStrength + grain))
+      data[i + 1] = Math.max(0, Math.min(255, 128 + (Math.random() - 0.5) * 25))
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0)
+
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.wrapS = THREE.RepeatWrapping
+  tex.wrapT = THREE.RepeatWrapping
+  tex.repeat.set(4, 4)
+  return tex
+}
+
 // ---------- Material variants -----------------------------------------------
 function makeMaterials() {
   const M = THREE.MeshPhysicalMaterial
+  const normalMap = generateBrushedNormalMap()
+  const nScale = new THREE.Vector2(0.9, 0.9)
   return [
     new M({
       color: 0xF2EFE9, metalness: 1.0, roughness: 0.18,
       iridescence: 0.7, iridescenceIOR: 1.45,
       clearcoat: 0.4, clearcoatRoughness: 0.25,
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
     new M({
-      color: 0xFFD9C0, metalness: 0.15, roughness: 0.45,
+      color: 0xFFD9C0, metalness: 0.35, roughness: 0.38,
       sheen: 0.8, sheenColor: new THREE.Color(0xFFE6D2), sheenRoughness: 0.4,
       clearcoat: 0.3, clearcoatRoughness: 0.4,
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
     new M({
-      color: 0xF8B5C0, metalness: 0.08, roughness: 0.4,
+      color: 0xF8B5C0, metalness: 0.30, roughness: 0.35,
       sheen: 0.6, sheenColor: new THREE.Color(0xFFC8D2),
       clearcoat: 0.5, clearcoatRoughness: 0.25,
       transmission: 0.18, thickness: 0.3, ior: 1.3,
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
     new M({
-      color: 0xFCF1DE, metalness: 0.1, roughness: 0.5,
+      color: 0xFCF1DE, metalness: 0.30, roughness: 0.40,
       sheen: 0.55, sheenColor: new THREE.Color(0xFFEFD8),
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
     new M({
-      color: 0xF59B8E, metalness: 0.18, roughness: 0.42,
+      color: 0xF59B8E, metalness: 0.35, roughness: 0.35,
       sheen: 0.55, sheenColor: new THREE.Color(0xFFB7AB),
       clearcoat: 0.35, clearcoatRoughness: 0.3,
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
     new M({
       color: 0xF1E4C2, metalness: 0.7, roughness: 0.3,
       iridescence: 0.4, iridescenceIOR: 1.35,
+      normalMap, normalScale: nScale,
       side: THREE.DoubleSide,
     }),
   ]
@@ -104,8 +147,8 @@ class Petal {
     )
     this.mesh.position.set(
       (Math.random() - 0.5) * w,
-      initial ? (Math.random() - 0.5) * h * 0.95
-              : h * 0.42 + Math.random() * h * 0.08,
+      initial ? h * 0.52 + Math.random() * h * 0.5
+              : h * 0.52 + Math.random() * h * 0.08,
       (Math.random() - 0.5) * d,
     )
     this.mesh.rotation.set(
@@ -118,7 +161,8 @@ class Petal {
     const baseFall = c.initialFall
     this.vel.set(
       (Math.random() - 0.5) * 0.002,
-      -baseFall * (0.4 + Math.random() * 0.9),
+      initial ? -baseFall * (1.5 + Math.random() * 2.5)
+              : -baseFall * (0.4 + Math.random() * 0.9),
       0,
     )
   }
@@ -257,6 +301,32 @@ export function startPetals3D(container, userConfig = {}) {
   window.addEventListener('mouseleave', onLeave)
   resize()
 
+  // Pre-simulate ~5 seconds so petals are already mid-fall on first render
+  const _dv = new THREE.Vector3()
+  const dummyMouse = { pos: new THREE.Vector3(), active: false }
+  const PRE_SIM_FRAMES = 300
+  for (let f = 0; f < PRE_SIM_FRAMES; f++) {
+    const rr = config.repelRadius
+    const rf = config.repelForce
+    const rrSq = rr * rr
+    for (let i = 0; i < petals.length; i++) {
+      const pi = petals[i]
+      for (let j = i + 1; j < petals.length; j++) {
+        const pj = petals[j]
+        _dv.subVectors(pi.mesh.position, pj.mesh.position)
+        const dSq = _dv.lengthSq()
+        if (dSq < rrSq && dSq > 0.0001) {
+          const d = Math.sqrt(dSq)
+          const strength = (1 - d / rr) * rf
+          _dv.divideScalar(d)
+          pi.vel.addScaledVector(_dv, strength)
+          pj.vel.addScaledVector(_dv, -strength)
+        }
+      }
+      pi.step(1, dummyMouse, bounds)
+    }
+  }
+
   // Animation loop
   let last = performance.now()
   let raf  = 0
@@ -264,7 +334,25 @@ export function startPetals3D(container, userConfig = {}) {
     const dt = Math.min(48, now - last) / 16.67
     last = now
     if (!config.paused) {
-      for (let i = 0; i < petals.length; i++) petals[i].step(dt, mouse, bounds)
+      const rr = config.repelRadius
+      const rf = config.repelForce
+      const rrSq = rr * rr
+      for (let i = 0; i < petals.length; i++) {
+        const pi = petals[i]
+        for (let j = i + 1; j < petals.length; j++) {
+          const pj = petals[j]
+          _dv.subVectors(pi.mesh.position, pj.mesh.position)
+          const dSq = _dv.lengthSq()
+          if (dSq < rrSq && dSq > 0.0001) {
+            const d = Math.sqrt(dSq)
+            const strength = (1 - d / rr) * rf
+            _dv.divideScalar(d)
+            pi.vel.addScaledVector(_dv, strength)
+            pj.vel.addScaledVector(_dv, -strength)
+          }
+        }
+        pi.step(dt, mouse, bounds)
+      }
     }
     renderer.render(scene, camera)
     raf = requestAnimationFrame(tick)

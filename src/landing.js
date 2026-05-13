@@ -1,15 +1,23 @@
 import './style.css'
 import './blob.css'
 import { startPetals3D } from './petals3d.js'
-import { mountControls } from './controls.js'
 import { mountNav, minimizePods, restorePods } from './nav.js'
 import { createDrawer, openDrawer, closeDrawer } from './drawer.js'
+
+// AKR logo — prevent reload, close drawer if open
+const akrLink = document.querySelector('.mark__initials')
+if (akrLink) {
+  akrLink.addEventListener('click', (e) => {
+    e.preventDefault()
+    handleClose()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
+}
 
 // Petal field — real WebGL 3D scene
 const petalContainer = document.getElementById('petals')
 if (petalContainer) {
-  const petalCtrl = startPetals3D(petalContainer, { count: 95 })
-  mountControls(petalCtrl)
+  startPetals3D(petalContainer)
 }
 
 // Frosted nav menu (single trigger + dropdown column)
@@ -18,22 +26,22 @@ mountNav(document.getElementById('nav-mount'))
 // Drawer setup
 createDrawer()
 
-function setOverlayVisibility(hidden) {
-  const els = [document.querySelector('.cp'), document.querySelector('.mark'), document.querySelector('.timestamp')]
-  els.forEach(el => { if (el) el.style.display = hidden ? 'none' : '' })
+function setSecondaryVisibility(hidden) {
+  const els = [document.querySelector('.mark__bio'), document.querySelector('.timestamp')]
+  els.forEach(el => { if (el) el.style.opacity = hidden ? '0' : '' })
 }
 
 function handleClose() {
   closeDrawer()
   restorePods()
-  setOverlayVisibility(false)
+  setSecondaryVisibility(false)
 }
 
 document.addEventListener('click', (e) => {
   const workPod = e.target.closest('[data-action="work"]')
   if (workPod) {
     e.preventDefault()
-    setOverlayVisibility(true)
+    setSecondaryVisibility(true)
     minimizePods()
     openDrawer(handleClose)
   }
