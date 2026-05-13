@@ -17,6 +17,21 @@ mountModalWidget()
   })
 })()
 
+// Close button (X) — top-right, like the drawer close
+;(function initCloseButton() {
+  const nav = document.querySelector('.project-nav')
+  if (!nav) return
+  const close = document.createElement('button')
+  close.className = 'project-nav__close'
+  close.setAttribute('aria-label', 'Close project')
+  close.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>`
+  close.addEventListener('click', () => {
+    document.body.classList.add('is-leaving')
+    setTimeout(() => { window.location.href = 'index.html#work' }, 300)
+  })
+  nav.appendChild(close)
+})()
+
 // Replace text nav with pod-based nav
 ;(function initProjectNav() {
   const nav = document.querySelector('.project-nav')

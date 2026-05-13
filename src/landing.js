@@ -47,6 +47,57 @@ document.addEventListener('click', (e) => {
   }
 })
 
+// Auto-open work drawer if arriving via #work (e.g. closing a project page)
+if (window.location.hash === '#work') {
+  history.replaceState(null, '', window.location.pathname)
+  setTimeout(() => {
+    setSecondaryVisibility(true)
+    minimizePods()
+    openDrawer(handleClose)
+  }, 100)
+}
+
+// Barcode hover — glitchy scramble transition
+;(function initBarcodeGlitch() {
+  const timestamp = document.querySelector('.timestamp')
+  if (!timestamp) return
+  const defaultText = timestamp.dataset.default || '2026'
+  const hoverText = timestamp.dataset.hover || 'NYC'
+  const GLYPHS = '>*}|_:;$▓░▒█╗╔═«»§±†‡¤◊∆∑Ω0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+  const STEPS = 8
+  const INTERVAL = 45
+  let timer = null
+
+  function randGlyph() { return GLYPHS[Math.floor(Math.random() * GLYPHS.length)] }
+
+  function scrambleTo(target) {
+    if (timer) clearInterval(timer)
+    let step = 0
+    const padded = target.padStart(4).split('')
+    timer = setInterval(() => {
+      step++
+      let out = ''
+      for (let i = 0; i < padded.length; i++) {
+        // Each character "locks in" at a staggered step
+        if (step > STEPS - padded.length + i) {
+          out += padded[i]
+        } else {
+          out += randGlyph()
+        }
+      }
+      timestamp.textContent = out
+      if (step >= STEPS) {
+        clearInterval(timer)
+        timer = null
+        timestamp.textContent = target
+      }
+    }, INTERVAL)
+  }
+
+  timestamp.addEventListener('mouseenter', () => scrambleTo(hoverText))
+  timestamp.addEventListener('mouseleave', () => scrambleTo(defaultText))
+})()
+
 // Neon green custom cursor + glitchy character trail
 ;(function initCursorAndTrail() {
   const COLOR = '#D3FF41'

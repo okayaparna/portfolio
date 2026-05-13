@@ -65,6 +65,7 @@ body.project-page.is-leaving {
   transition: opacity 0.3s var(--ease-out);
 }
 
+
 /* Neon green text selection */
 body.project-page ::selection {
   background: #D3FF41;
@@ -150,6 +151,32 @@ body.project-page.theme-mid.contrast-low {
 
 .project-nav__logo:hover {
   color: var(--ink);
+}
+
+/* Close button (X) — top-right, matching drawer close */
+.project-nav__close {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transition: background 0.3s var(--ease-out);
+  padding: 0;
+  cursor: pointer;
+}
+.project-nav__close svg {
+  width: 20px;
+  height: 20px;
+}
+.project-nav__close:hover {
+  background: rgba(216, 199, 228, 0.4);
 }
 
 .project-nav__pods {

@@ -119,6 +119,18 @@ a {
   margin: 12px 0 0;
 }
 
+.mark__ash-link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(107, 95, 118, 0.3);
+  transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.mark__ash-link:hover {
+  color: #D3FF41;
+  border-bottom-color: #D3FF41;
+}
+
 /* =========================================================
    Mini nav (top-right) — used on sub-pages
    ========================================================= */
@@ -266,6 +278,76 @@ a {
   color: var(--lilac-4);
 }
 
+/* ── Landing-page metallic 3D pods ─────────────────────────── */
+.landing .pod {
+  background:
+    linear-gradient(
+      155deg,
+      #e8e4df 0%,
+      #d4cfca 20%,
+      #b8b2ac 45%,
+      #c9c4be 65%,
+      #e0ddd9 85%,
+      #eae7e3 100%
+    );
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(160, 155, 148, 0.5);
+  color: rgba(85, 80, 75, 0.9);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.65),
+    inset 0 -3px 6px rgba(80, 75, 68, 0.18),
+    inset 2px 0 4px rgba(255, 255, 255, 0.25),
+    inset -2px 0 4px rgba(80, 75, 68, 0.08),
+    0 8px 24px -6px rgba(60, 55, 48, 0.4),
+    0 3px 8px rgba(60, 55, 48, 0.2),
+    0 1px 2px rgba(60, 55, 48, 0.15);
+  text-shadow: none;
+}
+
+.landing .pod:hover {
+  background:
+    linear-gradient(
+      155deg,
+      #eeeae6 0%,
+      #ddd8d3 20%,
+      #c4bfb9 45%,
+      #d5d0ca 65%,
+      #e8e5e1 85%,
+      #f0ede9 100%
+    );
+  color: rgba(65, 60, 55, 0.95);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.75),
+    inset 0 -3px 7px rgba(80, 75, 68, 0.22),
+    inset 2px 0 5px rgba(255, 255, 255, 0.3),
+    inset -2px 0 5px rgba(80, 75, 68, 0.1),
+    0 10px 30px -6px rgba(60, 55, 48, 0.45),
+    0 4px 10px rgba(60, 55, 48, 0.25),
+    0 1px 3px rgba(60, 55, 48, 0.18);
+}
+
+.landing .pod--bottom:hover {
+  background:
+    linear-gradient(
+      155deg,
+      #e8e4df 0%,
+      #d4cfca 20%,
+      #b8b2ac 45%,
+      #c9c4be 65%,
+      #e0ddd9 85%,
+      #eae7e3 100%
+    );
+  color: rgba(85, 80, 75, 0.9);
+}
+
+/* Embossed icon effect — pressed-into-metal look */
+.landing .pod__icon svg {
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7))
+    drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.18));
+}
+
 /* Stem hanging from the bottom pod down to the frame edge */
 .cluster__stem {
   position: absolute;
@@ -340,7 +422,12 @@ a {
   letter-spacing: -0.02em;
   line-height: 1;
   mix-blend-mode: multiply;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: default;
+  transition: opacity 0.15s var(--ease-out);
+}
+.timestamp:hover {
+  opacity: 0.7;
 }
 
 @media (max-width: 600px) {
