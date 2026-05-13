@@ -75,9 +75,8 @@ export function createDrawer() {
   el.appendChild(close)
   el.appendChild(scrollTop)
 
-  gooWrap.appendChild(el)
   drawerEl = el
-  document.body.appendChild(gooWrap)
+  document.body.appendChild(el)
   return el
 }
 
