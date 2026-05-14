@@ -189,14 +189,26 @@ body.project-page.theme-mid.contrast-low {
   width: 70px;
   height: 86px;
   border-radius: 999px;
-  background: rgba(232, 221, 240, 0.78);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  border: 1px solid rgba(216, 199, 228, 0.55);
-  color: var(--lilac-4);
+  background:
+    linear-gradient(
+      155deg,
+      #e8e4df 0%,
+      #d4cfca 20%,
+      #b8b2ac 45%,
+      #c9c4be 65%,
+      #e0ddd9 85%,
+      #eae7e3 100%
+    );
+  border: 1px solid rgba(160, 155, 148, 0.5);
+  color: rgba(85, 80, 75, 0.9);
   box-shadow:
-    inset 0 0 16px rgba(255, 255, 255, 0.45),
-    0 8px 24px -10px rgba(120, 90, 110, 0.28);
+    inset 0 2px 4px rgba(255, 255, 255, 0.65),
+    inset 0 -3px 6px rgba(80, 75, 68, 0.18),
+    inset 2px 0 4px rgba(255, 255, 255, 0.25),
+    inset -2px 0 4px rgba(80, 75, 68, 0.08),
+    0 8px 24px -6px rgba(60, 55, 48, 0.4),
+    0 3px 8px rgba(60, 55, 48, 0.2),
+    0 1px 2px rgba(60, 55, 48, 0.15);
   display: grid;
   place-items: center;
   text-decoration: none;
@@ -206,15 +218,40 @@ body.project-page.theme-mid.contrast-low {
     color 0.3s var(--ease-out);
 }
 
-.project-pod svg {
+.project-pod .pod__icon {
+  display: grid;
+  place-items: center;
+}
+
+.project-pod .pod__icon svg {
   width: 26px;
   height: 26px;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7))
+    drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.18));
 }
 
 .project-pod:hover {
   transform: scale(1.08);
-  background: rgba(216, 199, 228, 0.92);
-  color: var(--ink);
+  background:
+    linear-gradient(
+      155deg,
+      #eeeae6 0%,
+      #ddd8d3 20%,
+      #c4bfb9 45%,
+      #d5d0ca 65%,
+      #e8e5e1 85%,
+      #f0ede9 100%
+    );
+  color: rgba(65, 60, 55, 0.95);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.75),
+    inset 0 -3px 7px rgba(80, 75, 68, 0.22),
+    inset 2px 0 5px rgba(255, 255, 255, 0.3),
+    inset -2px 0 5px rgba(80, 75, 68, 0.1),
+    0 10px 30px -6px rgba(60, 55, 48, 0.45),
+    0 4px 10px rgba(60, 55, 48, 0.25),
+    0 1px 3px rgba(60, 55, 48, 0.18);
 }
 
 /* Pod hover tooltip — cursor-following green pill */

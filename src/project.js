@@ -43,10 +43,8 @@ mountModalWidget()
     const pods = document.createElement('div')
     pods.className = 'project-nav__pods'
     pods.innerHTML = `
-      <a class="project-pod" href="index.html" aria-label="Info">${glyphs.infoI}</a>
-      <a class="project-pod" href="projects.html#archive" aria-label="Experiments">${glyphs.flower4}</a>
-      <a class="project-pod" href="projects.html" aria-label="Projects">${glyphs.dots3}</a>
-      <a class="project-pod" href="info.html" aria-label="About">${glyphs.plusFlower}</a>
+      <a class="project-pod" href="mailto:aparnakrishnan81@gmail.com" aria-label="Contact"><span class="pod__icon">${glyphs.infoI}</span></a>
+      <a class="project-pod" href="projects.html" aria-label="Projects"><span class="pod__icon">${glyphs.dots3}</span></a>
     `
     nav.appendChild(pods)
   }
@@ -59,10 +57,8 @@ mountModalWidget()
   document.body.appendChild(tooltip)
 
   const labelMap = {
-    0: 'Info',
-    1: 'Experiments',
-    2: 'Projects',
-    3: 'About',
+    0: 'Contact',
+    1: 'Projects',
   }
 
   document.addEventListener('mouseover', (e) => {
