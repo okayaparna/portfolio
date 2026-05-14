@@ -34,42 +34,82 @@
       </header>
       <section class="project__hero"><div class="project__hero-image"></div></section>
       <section class="project__content">
+
+        <!-- Context -->
         <div class="project__text">
-          <div class="project__section-label">Brief</div>
-          <h2>Overview</h2>
-          <p>A speculative rebrand for WIRED magazine, exploring how a legacy tech publication might evolve its visual identity to reflect the shifting landscape of technology and culture.</p>
+          <div class="project__section-label">Context</div>
+          <h2>About</h2>
+          <p><a href="https://www.wired.com" target="_blank" rel="noopener">WIRED</a> stands as one of the most influential voices in technology journalism, exploring how innovation intersects with science, culture, and society. While the magazine has successfully expanded its digital reach and maintained its position as an essential resource for understanding our rapidly changing technological landscape, its visual brand identity has remained largely static, failing to reflect the dynamic evolution it covers so thoroughly.</p>
+          <p>The aim of this project was to bring in a dimension of user input based interactivity, to further be in alignment to the evolution of the magazine's vision.</p>
         </div>
+
+        <!-- Video -->
         <div class="project__image-full">
           <div class="project__img-placeholder"></div>
-          <div class="project__caption">1.1 — Rebrand Concept</div>
         </div>
+
+        <!-- Concept -->
         <div class="project__text">
-          <div class="project__section-label">Typographic System</div>
-          <h2>Approach</h2>
-          <p>The redesign centers on a modular typographic system that adapts across print, digital, and experiential formats while maintaining the publication's signature editorial voice.</p>
+          <h2>Using code to manipulate and redesign a logo using a live data set.</h2>
+          <p>Finding someone's IP address is surprisingly quick and easy, whether through email headers, web interactions, or basic tracking methods. Once obtained, an IP address can be used maliciously to track a user's location, launch cyberattacks, or even exploit vulnerabilities in their network.</p>
+          <p>WIRED magazine has a subsection dedicated to addressing updates and news about cyber security and digital privacy. Leveraging this, I wanted to redesign the logo to emphasize their efforts in this area and bring in some user-interaction to further push the notion of the dangers of cyber-security breaches and how we may be personally responsible for it.</p>
+          <p>This WIRED rebrand, visually demonstrates how effortlessly digital privacy can be breached. By accessing the IP address of the user to generate dynamic logos, the logo becomes a live demonstration of how easy it is to breach digital privacy, using visitors' own network data to generate unique, ever-changing visual identities.</p>
+        </div>
+
+        <!-- Development -->
+        <div class="project__text">
+          <div class="project__section-label">Development</div>
+          <h2>There are atleast 4,294,967,296 possibilities</h2>
+          <p>An IP address in (Standard) IPv4 format consists of 4 integer values separated by periods. Each integer value, called an octet, can range from 0 to 255, which gives 256 possible values for each octet (since 0 is included).</p>
+          <p>Therefore, Total possible variations for generative logos = 256 &times; 256 &times; 256 &times; 256 = 256&#8308; = 4,294,967,296 variations</p>
+        </div>
+
+        <div class="project__image-grid">
+          <div class="project__img-placeholder"></div>
+          <div class="project__img-placeholder"></div>
         </div>
         <div class="project__image-grid">
           <div class="project__img-placeholder"></div>
           <div class="project__img-placeholder"></div>
         </div>
-        <div class="project__text">
-          <div class="project__section-label">Color &amp; Grid</div>
-          <h2>System Design</h2>
-          <p>Developed a flexible color palette and layout grid that maintains consistency across print spreads, web articles, and social media while allowing for editorial expressiveness.</p>
-        </div>
-        <div class="project__image-full">
+        <div class="project__image-grid">
           <div class="project__img-placeholder"></div>
-          <div class="project__caption">2.2 — Layout Grid &amp; Color System</div>
+          <div class="project__img-placeholder"></div>
         </div>
+
+        <!-- Problem -->
         <div class="project__text">
-          <div class="project__section-label">Brand Applications</div>
+          <div class="project__section-label">Problem</div>
+          <h2>Variation without parameters is chaos; variation with parameters is a system.</h2>
+          <p>Any system designed to generate multiple variations becomes more powerful, controllable, and meaningful when those variations are driven by defined parameters rather than randomness.</p>
+          <p>In order to transform this randomness into purposeful iteration, I introduced a few parameters that will automatically apply to the IP Address collected.</p>
+          <p>Having large values as parameters (anything over the integer 80) would make the logo illegible (or quite simply, wonky).</p>
+          <p>Since this is a live API, the server would have to first attain the IP first and then produce results. Hence the speed of the dynamic motion needs to be controlled.</p>
+        </div>
+
+        <!-- Solution -->
+        <div class="project__text">
+          <div class="project__section-label">Solution</div>
           <h2>Outcome</h2>
-          <p>A comprehensive brand system including masthead, layout grid, color palette, and motion language that bridges WIRED's print heritage with a digital-native future.</p>
+          <p>If any of the integer values is greater than 80, then it is divided by 1000 so that they now produce a parameter within the range of 0 and 80.</p>
+          <p>Using Node.js to attain a string (IP address) on buffer.</p>
         </div>
+
+        <div class="project__image-full">
+          <div class="project__img-placeholder"></div>
+          <div class="project__caption">2 — Playing with parameters that control the dynamic logo.</div>
+        </div>
+
+        <div class="project__image-full">
+          <div class="project__img-placeholder"></div>
+          <div class="project__caption">3 — Logo variation on the WIRED magazine web interface (darkmode, static)</div>
+        </div>
+
         <div class="project__image-grid">
           <div class="project__img-placeholder"></div>
           <div class="project__img-placeholder"></div>
         </div>
+
       </section>
     </main>
     <script type="module" src="/src/project.js"></script>

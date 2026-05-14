@@ -101,22 +101,21 @@ export function mountModalWidget() {
 
   function buildSectionLinks() {
     const container = widget.querySelector('.mw__section-links')
-    const headings = document.querySelectorAll('.project__content h2')
+    const labels = document.querySelectorAll('.project__content .project__section-label')
     container.innerHTML = ''
-    let currentParent = null
-    headings.forEach((h, i) => {
-      const text = h.textContent.trim()
-      if (text === 'About') return
-      if (!h.id) h.id = 'section-' + i
-      const isTopLevel = /^Project\s+\d/i.test(text)
+    labels.forEach((label, i) => {
+      const text = label.textContent.trim()
+      if (!text) return
+      const textBlock = label.closest('.project__text')
+      if (!textBlock) return
+      if (!textBlock.id) textBlock.id = 'section-' + i
       const link = document.createElement('a')
-      link.href = '#' + h.id
+      link.href = '#' + textBlock.id
       link.textContent = text
       link.className = 'mw__section-link'
-      if (!isTopLevel) link.classList.add('mw__section-link--nested')
       link.addEventListener('click', (e) => {
         e.preventDefault()
-        h.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        textBlock.scrollIntoView({ behavior: 'smooth', block: 'start' })
       })
       container.appendChild(link)
     })
