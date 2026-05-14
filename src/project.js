@@ -44,7 +44,7 @@ mountModalWidget()
     pods.className = 'project-nav__pods'
     pods.innerHTML = `
       <a class="project-pod" href="mailto:aparnakrishnan81@gmail.com" aria-label="Contact"><span class="pod__icon">${glyphs.infoI}</span></a>
-      <a class="project-pod" href="projects.html" aria-label="Projects"><span class="pod__icon">${glyphs.dots3}</span></a>
+      <a class="project-pod" href="index.html#work" aria-label="Work"><span class="pod__icon">${glyphs.dots3}</span></a>
       <a class="project-pod" href="projects.html#archive" aria-label="Experiments"><span class="pod__icon">${glyphs.flower4}</span></a>
       <a class="project-pod" href="info.html" aria-label="About"><span class="pod__icon">${glyphs.plusFlower}</span></a>
     `
@@ -60,7 +60,7 @@ mountModalWidget()
 
   const labelMap = {
     0: 'Contact',
-    1: 'Projects',
+    1: 'Work',
     2: 'Experiments',
     3: 'About',
   }
