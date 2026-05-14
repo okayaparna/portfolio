@@ -362,6 +362,12 @@ body.project-page.theme-mid.contrast-low {
   margin-bottom: 0;
 }
 
+.project__content a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 /* Full-width image — edge to edge with 20px margin */
 .project__image-full {
   padding: 0 20px;
@@ -475,15 +481,13 @@ body.project-page.theme-mid.contrast-low {
   transform: rotate(45deg) scale(0.9);
 }
 
-/* Panel — frosted glass card */
+/* Panel */
 .modal-widget__panel {
   position: absolute;
   bottom: 60px;
   right: 0;
   width: 255px;
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #ffffff;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
@@ -506,7 +510,7 @@ body.project-page.theme-mid.contrast-low {
 /* Dark/mid panel override */
 body.project-page.theme-dark .modal-widget__panel,
 body.project-page.theme-mid .modal-widget__panel {
-  background: rgba(30, 26, 40, 0.85);
+  background: #1e1a28;
 }
 
 /* Project title */
@@ -580,6 +584,17 @@ body.project-page.theme-mid .modal-widget__panel {
 
 .mw__section-link:hover {
   background: rgba(248, 181, 192, 0.2);
+}
+
+.mw__section-link--nested {
+  padding-left: 24px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* TL;DR button */

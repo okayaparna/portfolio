@@ -103,12 +103,17 @@ export function mountModalWidget() {
     const container = widget.querySelector('.mw__section-links')
     const headings = document.querySelectorAll('.project__content h2')
     container.innerHTML = ''
+    let currentParent = null
     headings.forEach((h, i) => {
+      const text = h.textContent.trim()
+      if (text === 'About') return
       if (!h.id) h.id = 'section-' + i
+      const isTopLevel = /^Project\s+\d/i.test(text)
       const link = document.createElement('a')
       link.href = '#' + h.id
-      link.textContent = h.textContent
+      link.textContent = text
       link.className = 'mw__section-link'
+      if (!isTopLevel) link.classList.add('mw__section-link--nested')
       link.addEventListener('click', (e) => {
         e.preventDefault()
         h.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -128,10 +133,19 @@ export function mountModalWidget() {
     } else {
       const content = document.querySelector('.project__content')
       if (!content) return
-      const paragraphs = content.querySelectorAll('p')
-      const firstTwo = Array.from(paragraphs).slice(0, 2).map(p => p.textContent).join(' ')
-      const summary = firstTwo.length > 280 ? firstTwo.slice(0, 280) + '…' : firstTwo
-      tldrPanel.innerHTML = `<p>${summary}</p>`
+      const projectHeadings = Array.from(content.querySelectorAll('h2')).filter(h => /^Project\s+\d/i.test(h.textContent.trim()))
+      const parts = projectHeadings.map(h => {
+        const textBlock = h.closest('.project__text')
+        if (!textBlock) return ''
+        const p = textBlock.querySelector('p')
+        if (!p) return ''
+        const sentence = p.textContent.split(/\.(?:\s|$)/)[0]
+        return sentence ? sentence.trim() + '.' : ''
+      }).filter(Boolean)
+      const html = parts.length
+        ? `<p>${parts.join(' ')}</p>`
+        : '<p><em>No summary available.</em></p>'
+      tldrPanel.innerHTML = html
       tldrPanel.classList.add('is-visible')
       tldrOpen = true
     }
