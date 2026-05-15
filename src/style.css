@@ -523,7 +523,7 @@ a {
 .drawer__card-image {
   width: 100%;
   aspect-ratio: 726 / 435;
-  background: #d9d9d9;
+  background-color: #d9d9d9;
   border-radius: 8px;
 }
 

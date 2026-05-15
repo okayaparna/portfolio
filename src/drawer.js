@@ -1,7 +1,7 @@
 const PROJECTS = [
   { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html' },
   { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'A rewards program reimagined for modern loyalty experiences.', href: 'phia-rewards.html' },
-  { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html' },
+  { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
   { title: 'The New School Commencement 2025', meta: ['The New School', 'Fall 2025'], desc: "Celebrating Unity through Intersectionality at The New School's 89th Commencement", href: 'tns-commencement-2025.html' },
   { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: 'parsons-benefit-2024.html' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html' },
@@ -38,6 +38,11 @@ export function createDrawer() {
 
     const img = document.createElement('div')
     img.className = 'drawer__card-image'
+    if (project.thumbnail) {
+      img.style.backgroundImage = `url(${project.thumbnail})`
+      img.style.backgroundSize = 'cover'
+      img.style.backgroundPosition = 'center'
+    }
 
     const meta = document.createElement('div')
     meta.className = 'drawer__card-meta'
