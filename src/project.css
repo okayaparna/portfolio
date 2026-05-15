@@ -533,11 +533,11 @@ body.project-page.theme-mid.contrast-low {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.project__image-grid--5 {
+.project__image-grid--3:has(.project__video-cell) {
   height: 822px;
 }
 
-.project__image-grid--5 .project__video-cell {
+.project__image-grid--3 .project__video-cell {
   aspect-ratio: auto;
   height: 100%;
 }
