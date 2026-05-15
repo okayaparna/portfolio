@@ -349,15 +349,18 @@ body.project-page.theme-mid.contrast-low {
 
 /* Hero */
 .project__hero {
-  padding: 0 20px;
-  margin: 0 0 80px;
+  padding: 0;
+  margin: 0;
 }
 
 .project__hero-image {
   width: 100%;
-  aspect-ratio: 16/9;
-  background: var(--lilac-2);
-  border-radius: 12px;
+  display: block;
+  border-radius: 0;
+}
+
+[data-project="disciple"] .project__hero-image {
+  background: url('/images/disciple/thumbnail_bg_final.png') center/cover no-repeat;
 }
 
 /* Content wrapper */
@@ -365,11 +368,45 @@ body.project-page.theme-mid.contrast-low {
   padding: 0 0 120px;
 }
 
-/* Text section — centered narrow column */
+/* Nav links */
+.project-nav__links {
+  position: absolute;
+  right: 32px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.project-nav__links a {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.project-nav__links a:hover {
+  color: var(--ink);
+}
+
+/* Text section — two-column layout */
 .project__text {
-  max-width: 760px;
+  display: flex;
+  gap: 60px;
+  padding: 60px 40px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+}
+
+.project__text-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.project__text-right {
+  flex: 1;
+  min-width: 0;
 }
 
 .project__section-label {
@@ -405,23 +442,29 @@ body.project-page.theme-mid.contrast-low {
   text-decoration: underline;
 }
 
-/* Full-width image — edge to edge with 20px margin */
+/* Full-width image — edge to edge, no gaps */
 .project__image-full {
-  padding: 0 20px;
-  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
 }
 
-.project__image-full img {
+.project__image-full img,
+.project__image-full video {
   width: 100%;
   display: block;
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.project__image-full video {
+  height: auto;
+  object-fit: contain;
 }
 
 .project__image-full .project__img-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
   background: var(--lilac-2);
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 /* Image caption */
@@ -434,24 +477,51 @@ body.project-page.theme-mid.contrast-low {
 
 /* Two-column image grid */
 .project__image-grid {
-  padding: 0 20px;
+  padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 0;
+  gap: 12px;
+  margin: 0;
+}
+
+.project__image-grid + .project__image-grid,
+.project__image-grid + .project__image-full,
+.project__image-full + .project__image-grid,
+.project__image-full + .project__image-full {
+  margin-top: 12px;
 }
 
 .project__image-grid img {
   width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
   display: block;
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.project__video-cell {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.project__video-cell video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
 }
 
 .project__image-grid .project__img-placeholder {
   width: 100%;
   aspect-ratio: 4/3;
   background: var(--lilac-2);
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 /* Three-column image grid */
@@ -459,26 +529,39 @@ body.project-page.theme-mid.contrast-low {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.project__image-grid--5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.project__image-grid--5 {
+  height: 822px;
+}
+
+.project__image-grid--5 .project__video-cell {
+  aspect-ratio: auto;
+  height: 100%;
+}
+
 /* Single column stack of images */
 .project__image-stack {
-  padding: 0 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 0;
+  gap: 0;
+  margin: 0;
 }
 
 .project__image-stack img {
   width: 100%;
   display: block;
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 .project__image-stack .project__img-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
   background: var(--lilac-2);
-  border-radius: 12px;
+  border-radius: 0;
 }
 
 /* Modal Widget — frosted glass panel (matches Figma node 35:172) */
@@ -739,6 +822,13 @@ body.project-page.theme-mid .mw__tldr-panel {
     left: 20px;
     font-size: 32px;
   }
+  .project-nav__links {
+    right: 20px;
+    gap: 16px;
+  }
+  .project-nav__links a {
+    font-size: 12px;
+  }
   .project-nav__pods {
     gap: 8px;
   }
@@ -766,6 +856,8 @@ body.project-page.theme-mid .mw__tldr-panel {
     padding: 0 0 80px;
   }
   .project__text {
+    flex-direction: column;
+    gap: 16px;
     padding: 40px 20px;
   }
   .project__image-grid {
@@ -773,5 +865,8 @@ body.project-page.theme-mid .mw__tldr-panel {
   }
   .project__image-grid--3 {
     grid-template-columns: 1fr;
+  }
+  .project__image-grid--5 {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
