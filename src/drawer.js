@@ -1,10 +1,10 @@
 const PROJECTS = [
   { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html' },
-  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'A rewards program reimagined for modern loyalty experiences.', href: 'phia-rewards.html' },
+  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: true },
+  { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: '#', comingSoon: true },
   { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
-  { title: 'The New School Commencement 2025', meta: ['The New School', 'Fall 2025'], desc: "Celebrating Unity through Intersectionality at The New School's 89th Commencement", href: 'tns-commencement-2025.html' },
-  { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: 'parsons-benefit-2024.html' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html' },
+  { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: 'parsons-benefit-2024.html' },
   { title: 'Twingate', meta: ['Twingate', 'Summer 2024'], desc: 'Designing for prioritizing Information Hierarchy and Reducing navigational Friction for an enterprise product', href: 'twingate.html' },
   { title: 'Gundi Studios', meta: ['GUNDI STUDIOS', 'Spring 2024'], desc: "Adding \"oomph\" to an incredible South Asian Couture brand's digital presence.", href: 'gundi-studios.html' },
 ]
@@ -32,16 +32,28 @@ export function createDrawer() {
   grid.className = 'drawer__grid'
 
   for (const project of PROJECTS) {
-    const card = document.createElement('a')
+    const card = document.createElement(project.comingSoon ? 'div' : 'a')
     card.className = 'drawer__card'
-    card.href = project.href
+    if (project.comingSoon) {
+      card.classList.add('drawer__card--coming-soon')
+    } else {
+      card.href = project.href
+    }
 
     const img = document.createElement('div')
     img.className = 'drawer__card-image'
     if (project.thumbnail) {
-      img.style.backgroundImage = `url(${project.thumbnail})`
+      const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+      img.style.backgroundImage = `url(${base}${project.thumbnail})`
       img.style.backgroundSize = 'cover'
       img.style.backgroundPosition = 'center'
+    }
+
+    if (project.comingSoon) {
+      const overlay = document.createElement('div')
+      overlay.className = 'drawer__card-overlay'
+      overlay.textContent = 'Coming soon'
+      img.appendChild(overlay)
     }
 
     const meta = document.createElement('div')
