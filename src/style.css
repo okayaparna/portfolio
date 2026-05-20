@@ -541,10 +541,16 @@ a {
 }
 
 .drawer__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px 20px;
+  display: flex;
+  gap: 20px;
   padding: 160px 20px 80px 20px;
+}
+
+.drawer__column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .drawer__card {
@@ -558,6 +564,18 @@ a {
   width: 100%;
   aspect-ratio: 726 / 435;
   background-color: #d9d9d9;
+  border-radius: 8px;
+}
+
+.drawer__card-image:has(img) {
+  aspect-ratio: auto;
+  background-color: transparent;
+}
+
+.drawer__card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
   border-radius: 8px;
 }
 

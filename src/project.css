@@ -606,6 +606,36 @@ body.project-page.theme-mid.contrast-low {
   border-radius: 0;
 }
 
+/* Media grid — sneak-peek layout */
+.project__media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.project__media-grid img,
+.project__media-grid video {
+  width: 100%;
+  display: block;
+  border-radius: 0;
+}
+
+.project__media-grid video {
+  height: auto;
+  object-fit: contain;
+}
+
+.project__media-grid .media-item--full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .project__media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Modal Widget — frosted glass panel (matches Figma node 35:172) */
 .modal-widget {
   position: fixed;

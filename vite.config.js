@@ -17,6 +17,7 @@ export default defineConfig({
         wired_rebrand: resolve(__dirname, 'wired-rebrand.html'),
         twingate: resolve(__dirname, 'twingate.html'),
         gundi_studios: resolve(__dirname, 'gundi-studios.html'),
+        ash_configurations: resolve(__dirname, 'ash-configurations.html'),
       },
     },
   },
