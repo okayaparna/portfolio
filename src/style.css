@@ -148,7 +148,7 @@ a {
   font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.2px;
-  color: #636363;
+  color: #4a4a4a;
   max-width: 365px;
   margin: 12px 0 0;
 }
@@ -564,7 +564,7 @@ a {
 .drawer__card-meta {
   font-family: var(--sans);
   font-size: 14px;
-  color: #c0c0c0;
+  color: #767676;
   margin-top: 16px;
   line-height: 1.2;
   letter-spacing: -0.2px;
@@ -587,7 +587,7 @@ a {
 .drawer__card-desc {
   font-family: var(--sans);
   font-size: 18px;
-  color: #989898;
+  color: #636363;
   margin-top: 8px;
   line-height: 1.2;
   letter-spacing: -0.2px;

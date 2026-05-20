@@ -1,7 +1,7 @@
 const PROJECTS = [
-  { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html' },
-  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: true },
-  { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: '#', comingSoon: true },
+  { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html', comingSoon: 'Sneak peek?' },
+  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: 'Coming soon' },
+  { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: '#', comingSoon: 'Sneak peek?' },
   { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html' },
   { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: 'parsons-benefit-2024.html' },
@@ -52,7 +52,7 @@ export function createDrawer() {
     if (project.comingSoon) {
       const overlay = document.createElement('div')
       overlay.className = 'drawer__card-overlay'
-      overlay.textContent = 'Coming soon'
+      overlay.textContent = project.comingSoon
       img.appendChild(overlay)
     }
 
