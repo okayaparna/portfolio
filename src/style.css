@@ -1179,7 +1179,7 @@ body::after {
   right: 0;
   height: 131px;
   pointer-events: none;
-  z-index: 400;
+  z-index: 50;
 }
 
 body::before {
