@@ -424,6 +424,11 @@ body.project-page.theme-mid.contrast-low {
   border-radius: 0;
 }
 
+[data-project="wired-rebrand"] .project__hero-image {
+  aspect-ratio: 16/9;
+  background: var(--lilac-2);
+}
+
 [data-project="disciple"] .project__hero-image {
   background: url('/images/disciple/thumbnail_bg_final.png') center/cover no-repeat;
 }
