@@ -62,7 +62,9 @@ export function createDrawer() {
     if (project.comingSoon) {
       const overlay = document.createElement('div')
       overlay.className = 'drawer__card-overlay'
-      overlay.textContent = project.comingSoon
+      const pill = document.createElement('span')
+      pill.textContent = project.comingSoon
+      overlay.appendChild(pill)
       img.appendChild(overlay)
     }
 
