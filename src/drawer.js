@@ -4,7 +4,6 @@ const PROJECTS = [
   { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: 'ash-configurations.html', comingSoon: 'Sneak peek?' },
   { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html', thumbnail: '/images/wired/thumbnail.jpg' },
-  { title: 'The 75th Parsons Benefit', meta: ['The New School', 'Spring 2024'], desc: "Celebrating the legacy of fashion and design at Parsons School of Design's annual benefit", href: 'parsons-benefit-2024.html' },
   { title: 'Twingate', meta: ['Twingate', 'Summer 2024'], desc: 'Designing for prioritizing Information Hierarchy and Reducing navigational Friction for an enterprise product', href: 'twingate.html' },
   { title: 'Gundi Studios', meta: ['GUNDI STUDIOS', 'Spring 2024'], desc: "Adding \"oomph\" to an incredible South Asian Couture brand's digital presence.", href: 'gundi-studios.html', thumbnail: '/images/gundi/thumbnail.png' },
 ]
