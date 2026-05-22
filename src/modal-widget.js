@@ -27,8 +27,11 @@ export function mountModalWidget() {
     </button>
     <div class="modal-widget__panel">
       <div class="mw__nav-row">
-        <a class="mw__nav-arrow" href="${prevHref}" ${prevDisabled ? 'aria-disabled="true"' : ''}>Prev</a>
-        <a class="mw__nav-arrow" href="${nextHref}" ${nextDisabled ? 'aria-disabled="true"' : ''}>Next</a>
+        <a class="mw__nav-link" href="${prevHref}" ${prevDisabled ? 'aria-disabled="true"' : ''}>Prev</a>
+        <button class="mw__scroll-top" aria-label="Scroll to top">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <a class="mw__nav-link" href="${nextHref}" ${nextDisabled ? 'aria-disabled="true"' : ''}>Next</a>
       </div>
 
       <div class="mw__project-title">${currentTitle}</div>
@@ -79,6 +82,10 @@ export function mountModalWidget() {
     widget.classList.toggle('is-open', isOpen)
     if (isOpen) buildSectionLinks()
     if (!isOpen) closeTldr()
+  })
+
+  widget.querySelector('.mw__scroll-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   })
 
   document.addEventListener('click', (e) => {
