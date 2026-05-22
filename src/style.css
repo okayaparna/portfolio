@@ -59,6 +59,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Iosevka Charon Mono';
+  src: url('/fonts/IosevkaCharonMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Palette — soft cream + lilac */
   --bg:           #FFFFFF;
@@ -75,6 +83,7 @@
   --sans: 'ABC Diatype', 'Manrope', ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   --serif: 'ABC Arizona Flare', 'Georgia', serif;
   --barcode: 'Libre Barcode 39 Text', cursive;
+  --mono: 'Iosevka Charon Mono', 'SF Mono', 'Fira Code', monospace;
 
   /* Easing */
   --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);
@@ -426,13 +435,17 @@ a {
 .pod-tooltip {
   position: fixed;
   white-space: nowrap;
-  font-family: var(--sans);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
   font-weight: 400;
-  font-size: 20px;
-  color: #000;
-  background: rgb(211, 255, 65);
+  font-size: 14px;
+  color: #6E6E6E;
+  background: #D3FF41;
   border-radius: 8px;
-  padding: 8px 24px;
+  padding: 4px 12px;
   pointer-events: none;
   opacity: 0;
   z-index: 350;

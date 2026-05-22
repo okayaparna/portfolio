@@ -792,21 +792,21 @@ body.project-page.theme-mid .modal-widget__panel {
 /* TL;DR button */
 .mw__tldr-btn {
   width: 100%;
-  padding: 6px 0;
+  padding: 4px 12px;
   font-size: 14px;
-  font-family: var(--sans);
-  font-weight: 500;
-  border: 1px solid var(--lilac-3);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--ink-muted);
+  font-family: var(--mono);
+  font-weight: 400;
+  border: none;
+  border-radius: 8px;
+  background: #D3FF41;
+  color: #6E6E6E;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
 }
 
 .mw__tldr-btn:hover {
-  background: var(--lilac-2);
-  color: var(--ink);
+  background: #c8f236;
+  color: #555;
 }
 
 /* TL;DR side panel — opens to the left of the nav modal */
