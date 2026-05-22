@@ -645,32 +645,68 @@ body.project-page.theme-mid.contrast-low {
 }
 
 .modal-widget__trigger {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1px solid var(--lilac-3);
-  background: var(--bg);
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 58px;
+  height: 72px;
+  border-radius: 999px;
+  border: 1px solid rgba(160, 155, 148, 0.5);
+  background:
+    linear-gradient(
+      155deg,
+      #e8e4df 0%,
+      #d4cfca 20%,
+      #b8b2ac 45%,
+      #c9c4be 65%,
+      #e0ddd9 85%,
+      #eae7e3 100%
+    );
+  color: rgba(85, 80, 75, 0.9);
+  display: grid;
+  place-items: center;
   cursor: pointer;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s, background 0.3s;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.65),
+    inset 0 -3px 6px rgba(80, 75, 68, 0.18),
+    inset 2px 0 4px rgba(255, 255, 255, 0.25),
+    inset -2px 0 4px rgba(80, 75, 68, 0.08),
+    0 8px 24px -6px rgba(60, 55, 48, 0.4),
+    0 3px 8px rgba(60, 55, 48, 0.2),
+    0 1px 2px rgba(60, 55, 48, 0.15);
 }
 
 .modal-widget__trigger svg {
   width: 22px;
   height: 22px;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7))
+    drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.18));
 }
 
 .modal-widget__trigger:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  background:
+    linear-gradient(
+      155deg,
+      #eeeae6 0%,
+      #ddd8d3 20%,
+      #c4bfb9 45%,
+      #d5d0ca 65%,
+      #e8e5e1 85%,
+      #f0ede9 100%
+    );
+  color: rgba(65, 60, 55, 0.95);
+  box-shadow:
+    inset 0 2px 5px rgba(255, 255, 255, 0.75),
+    inset 0 -3px 7px rgba(80, 75, 68, 0.22),
+    inset 2px 0 5px rgba(255, 255, 255, 0.3),
+    inset -2px 0 5px rgba(80, 75, 68, 0.1),
+    0 10px 30px -6px rgba(60, 55, 48, 0.45),
+    0 4px 10px rgba(60, 55, 48, 0.25),
+    0 1px 3px rgba(60, 55, 48, 0.18);
   transform: scale(1.05);
 }
 
 .modal-widget.is-open .modal-widget__trigger {
-  transform: rotate(45deg) scale(0.9);
+  transform: scale(0.95);
 }
 
 /* Panel */
