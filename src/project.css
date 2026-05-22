@@ -99,6 +99,36 @@ body.project-page.is-leaving {
 }
 
 
+/* Viewport edge blur overlays — frosted fade at top & bottom */
+body.project-page::before,
+body.project-page::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 131px;
+  pointer-events: none;
+  z-index: 400;
+}
+
+body.project-page::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+body.project-page::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 100%);
+  mask-image: linear-gradient(0deg, #000 0%, transparent 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
 /* Neon green text selection */
 body.project-page ::selection {
   background: #D3FF41;
