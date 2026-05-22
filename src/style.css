@@ -710,6 +710,245 @@ a {
   }
 }
 
+/* =========================================================
+   Sneak Peek Panel
+   ========================================================= */
+.sneak-peek {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+  max-width: 820px;
+  z-index: 300;
+  background: var(--bg, #FBFAF7);
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-out);
+  pointer-events: none;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.sneak-peek.is-open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.sneak-peek__close {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--ink, #1a1a1a);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.sneak-peek__close:hover {
+  opacity: 1;
+}
+
+.sneak-peek__close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sneak-peek__scroll {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sneak-peek__content {
+  padding: 60px 48px 100px;
+}
+
+/* Header */
+.sneak-peek__header {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 40px;
+}
+
+.sneak-peek__header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.sneak-peek__header-right {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 32px;
+  align-content: start;
+}
+
+.sneak-peek__tag {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-muted, #9a9a9a);
+  border: 1px solid var(--lilac-3, #ddd);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 16px;
+}
+
+.sneak-peek__title {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink, #1a1a1a);
+  letter-spacing: -0.4px;
+  margin: 0 0 8px;
+}
+
+.sneak-peek__subtitle {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ink-muted, #9a9a9a);
+  margin: 0 0 16px;
+}
+
+.sneak-peek__status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-muted, #9a9a9a);
+}
+
+.sneak-peek__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F59E0B;
+}
+
+.sneak-peek__meta-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-muted, #9a9a9a);
+  margin-bottom: 4px;
+}
+
+.sneak-peek__meta-value {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink, #1a1a1a);
+}
+
+/* Hero */
+.sneak-peek__hero {
+  margin-bottom: 40px;
+}
+
+.sneak-peek__hero img {
+  width: 100%;
+  display: block;
+  border-radius: 0;
+}
+
+/* Body */
+.sneak-peek__body {
+  margin-bottom: 36px;
+}
+
+.sneak-peek__body p {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink, #1a1a1a);
+  margin: 0 0 16px;
+}
+
+.sneak-peek__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* TL;DR */
+.sneak-peek__tldr {
+  margin-bottom: 36px;
+}
+
+.sneak-peek__tldr h2 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink, #1a1a1a);
+  margin: 0 0 20px;
+}
+
+.sneak-peek__tldr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.sneak-peek__tldr-card {
+  padding: 28px;
+  border-radius: 16px;
+}
+
+.sneak-peek__tldr-card-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0 0 12px;
+  letter-spacing: -0.3px;
+}
+
+.sneak-peek__tldr-card p {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Closing */
+.sneak-peek__closing {
+  margin-top: 36px;
+}
+
+.sneak-peek__closing p {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink, #1a1a1a);
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sneak-peek {
+    width: 100%;
+    max-width: none;
+  }
+  .sneak-peek__content {
+    padding: 48px 24px 80px;
+  }
+  .sneak-peek__header {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .sneak-peek__title {
+    font-size: 26px;
+  }
+}
+
 /* Stem + bud fade when drawer is open */
 .cluster__stem,
 .cluster__bud {

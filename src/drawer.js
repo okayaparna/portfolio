@@ -1,3 +1,10 @@
+import { openSneakPeek } from './sneak-peek.js'
+
+const SNEAK_PEEK_KEYS = {
+  'align-with-ash.html': 'align-with-ash',
+  'ash-configurations.html': 'ash-configurations',
+}
+
 const PROJECTS = [
   { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html', thumbnail: '/images/align-with-ash/thumbnail.png', comingSoon: 'Sneak peek?' },
   { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: 'Coming soon' },
@@ -60,6 +67,11 @@ export function createDrawer() {
 
     if (project.comingSoon) {
       card.dataset.cursorTag = project.comingSoon
+      const sneakKey = SNEAK_PEEK_KEYS[project.href]
+      if (sneakKey) {
+        card.style.cursor = 'pointer'
+        card.addEventListener('click', () => openSneakPeek(sneakKey))
+      }
     }
 
     const meta = document.createElement('div')
