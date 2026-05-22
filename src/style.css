@@ -633,31 +633,28 @@ a {
   overflow: hidden;
 }
 
-.drawer__card-overlay {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: transparent;
-  border-radius: 8px;
-  opacity: 0;
-  transition: opacity 0.3s var(--ease-out);
-}
-
-.drawer__card-overlay span {
+.drawer__cursor-tag {
+  position: fixed;
+  white-space: nowrap;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   font-family: var(--mono);
-  font-size: 14px;
   font-weight: 400;
+  font-size: 14px;
   color: #6E6E6E;
   background: #D3FF41;
   border-radius: 8px;
   padding: 4px 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 350;
+  transition: opacity 0.25s var(--ease-out);
+  transform: translate(-50%, calc(-100% - 14px));
 }
 
-.drawer__card--coming-soon:hover .drawer__card-overlay {
+.drawer__cursor-tag.is-visible {
   opacity: 1;
 }
 

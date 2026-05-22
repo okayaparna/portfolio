@@ -60,12 +60,7 @@ export function createDrawer() {
     }
 
     if (project.comingSoon) {
-      const overlay = document.createElement('div')
-      overlay.className = 'drawer__card-overlay'
-      const pill = document.createElement('span')
-      pill.textContent = project.comingSoon
-      overlay.appendChild(pill)
-      img.appendChild(overlay)
+      card.dataset.cursorTag = project.comingSoon
     }
 
     const meta = document.createElement('div')
@@ -141,6 +136,38 @@ export function createDrawer() {
   el.appendChild(scroller)
   el.appendChild(close)
   el.appendChild(scrollTop)
+
+  // Cursor-following tag for coming-soon cards
+  const cursorTag = document.createElement('div')
+  cursorTag.className = 'drawer__cursor-tag'
+  el.appendChild(cursorTag)
+
+  el.addEventListener('mouseover', (e) => {
+    const card = e.target.closest('.drawer__card--coming-soon')
+    if (!card) {
+      cursorTag.classList.remove('is-visible')
+      return
+    }
+    cursorTag.textContent = card.dataset.cursorTag || ''
+    cursorTag.classList.add('is-visible')
+  })
+
+  el.addEventListener('mouseout', (e) => {
+    const card = e.target.closest('.drawer__card--coming-soon')
+    if (card && !card.contains(e.relatedTarget)) {
+      cursorTag.classList.remove('is-visible')
+    }
+    if (!e.target.closest('.drawer__card--coming-soon') && !e.relatedTarget?.closest('.drawer__card--coming-soon')) {
+      cursorTag.classList.remove('is-visible')
+    }
+  })
+
+  el.addEventListener('mousemove', (e) => {
+    if (cursorTag.classList.contains('is-visible')) {
+      cursorTag.style.left = e.clientX + 'px'
+      cursorTag.style.top = e.clientY + 'px'
+    }
+  })
 
   drawerEl = el
   document.body.appendChild(el)
