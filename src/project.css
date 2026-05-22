@@ -451,6 +451,84 @@ body.project-page.theme-mid.contrast-low {
   object-fit: contain;
 }
 
+/* Scaled-down last media items */
+[data-project="wired-rebrand"] .wired-scaled.project__image-full {
+  background: #EDEDEB;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+[data-project="wired-rebrand"] .wired-scaled.project__image-full video {
+  width: 75%;
+  border-radius: 8px;
+}
+
+[data-project="wired-rebrand"] .wired-scaled.project__image-grid {
+  gap: 12px;
+}
+
+[data-project="wired-rebrand"] .wired-scaled .project__video-cell {
+  background: #EDEDEB;
+  aspect-ratio: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+[data-project="wired-rebrand"] .wired-scaled .project__video-cell video {
+  position: static;
+  width: auto;
+  height: 665px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Parameter cards */
+.wired-cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wired-cards__card {
+  flex: 1;
+  padding: 40px;
+  border-radius: 16px;
+  font-family: 'ABC Diatype', 'Manrope', sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+
+.wired-cards__card--yellow {
+  background: #F5E6A3;
+  transform: rotate(-3deg);
+}
+
+.wired-cards__card--pink {
+  background: #E8D0F0;
+  transform: rotate(2.5deg);
+}
+
+.wired-cards__icon {
+  display: block;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.wired-cards__card p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
 [data-project="disciple"] .project__hero-image {
   background: url('/images/disciple/thumbnail_bg_final.png') center/cover no-repeat;
 }
