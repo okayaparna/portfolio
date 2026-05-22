@@ -100,8 +100,8 @@ body.project-page.is-leaving {
 
 
 /* Viewport edge blur overlays — frosted fade at top & bottom */
-body.project-page::before,
-body.project-page::after {
+body::before,
+body::after {
   content: '';
   position: fixed;
   left: 0;
@@ -111,22 +111,22 @@ body.project-page::after {
   z-index: 400;
 }
 
-body.project-page::before {
+body::before {
   top: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
 }
 
-body.project-page::after {
+body::after {
   bottom: 0;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
   -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 100%);
   mask-image: linear-gradient(0deg, #000 0%, transparent 100%);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
 }
 
 /* Neon green text selection */
