@@ -21,27 +21,27 @@
     <main class="project">
       <header class="project__header">
         <div class="project__header-left">
-          <span class="project__tag">Design Intern</span>
           <h1 class="project__title">Twingate</h1>
           <div class="project__status"><span class="project__status-dot"></span> Complete</div>
         </div>
         <div class="project__header-right">
           <div><div class="project__meta-label">Role/Contract</div><div class="project__meta-value">Design Intern</div></div>
           <div><div class="project__meta-label">Timeline</div><div class="project__meta-value">May 2024 — August 2024</div></div>
-          <div><div class="project__meta-label">Team</div><div class="project__meta-value">Charles Scheuer, Shirley Wu, Iva Jankov</div></div>
+          <div><div class="project__meta-label">Team</div><div class="project__meta-value">Charles Scheuer<br>Shirley Wu<br>Iva Jankov</div></div>
           <div><div class="project__meta-label">Tools</div><div class="project__meta-value">Figma, Framer, Notion</div></div>
         </div>
       </header>
 
-      <section class="project__hero"><div class="project__hero-image"></div></section>
+      <section class="project__hero">
+        <img class="project__hero-image" src="/images/twingate/twingate-thumbnail.png" alt="Twingate — hero" />
+      </section>
 
       <section class="project__content">
 
-        <!-- Overview -->
+        <!-- Introduction -->
         <div class="project__text">
           <div class="project__text-left">
-            <div class="project__section-label">Overview</div>
-            <h2>About</h2>
+            <div class="project__section-label">Introduction</div>
           </div>
           <div class="project__text-right">
             <p>Twingate is an <a href="https://www.8vc.com/fellowships" target="_blank" rel="noopener">8VC</a> portfolio company that revolutionizes the cybersecurity space by building an alternative to VPNs. As a part of the 8VC Design Fellowship program, I worked with the Product Design team at Twingate.</p>
@@ -52,8 +52,7 @@
         <!-- Project 1: Documentation Redesign -->
         <div class="project__text">
           <div class="project__text-left">
-            <div class="project__section-label">Project 1 — Documentation Redesign</div>
-            <h2>Project 1</h2>
+            <div class="project__section-label">Project 1</div>
           </div>
           <div class="project__text-right">
             <p>The aim of the project was to revamp the documentation and guides page for the marketing website by introducing a more user-centric design approach. This involved crafting a new "Featured Guides" component that seamlessly integrated into the design system, focusing on presenting high-priority documents in a visually engaging and easy-to-navigate manner.</p>
@@ -61,26 +60,98 @@
           </div>
         </div>
 
-        <div class="project__image-full">
-          <div class="project__img-placeholder"></div>
-          <div class="project__caption">1.1 — Twingate's Documentation Website (Before)</div>
+        <div class="project__image-full twingate-scaled twingate-scaled--grey">
+          <video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-1.mp4"></video>
         </div>
 
-        <!-- Research -->
+        <!-- Problem — two-column section -->
         <div class="project__text">
           <div class="project__text-left">
-            <div class="project__section-label">Research</div>
-            <h2>How information is delivered is just as important as the information itself.</h2>
+            <div class="project__section-label">Problem</div>
+            <h2>There seems to be added friction in an area that is supposed to provide relief.</h2>
           </div>
           <div class="project__text-right">
-            <p>Using progressive disclosure to reduce cognitive overload by not overwhelming users all at once. Visual indicators also help in providing information in sizable chunks. Humans are visual creatures, hence using thumbnails and icons helps make it easier to grasp information.</p>
-            <p>Key questions we explored: What is the most effective way to categorize information? How can different sections containing articles be visually differentiated from each other? How can you display and gain most traction towards the most important articles in the documentation site?</p>
+            <p>The documentation website was <strong>extremely cluttered.</strong></p>
+            <p>It had a <strong>sea of links</strong>, lacked text and information hierarchy to any extent and was difficult to navigate for users who may be coming to look for one particular guide / article.</p>
+            <p>This lack of structure (visual and information) was causing a decrease in user engagement and retention.</p>
           </div>
         </div>
 
-        <div class="project__image-full">
-          <div class="project__img-placeholder"></div>
-          <div class="project__caption">1.2 — Rejected variations of components for articles within the documentation site.</div>
+        <!-- Tilted insight cards -->
+        <div class="twingate-cards">
+          <div class="twingate-cards__card twingate-cards__card--yellow">
+            <span class="material-symbols-outlined twingate-cards__icon">psychology</span>
+            <p>Using progressive disclosure to reduce cognitive overload by not overwhelming users all at once.</p>
+          </div>
+          <div class="twingate-cards__card twingate-cards__card--pink">
+            <span class="material-symbols-outlined twingate-cards__icon">dashboard</span>
+            <p>Visual indicators would also help in providing information in sizable chunks.</p>
+          </div>
+          <div class="twingate-cards__card twingate-cards__card--cyan">
+            <span class="material-symbols-outlined twingate-cards__icon">visibility</span>
+            <p>Humans are visual creatures, hence using thumbnails and icons would help make it easier to grasp information.</p>
+          </div>
+        </div>
+
+        <!-- Research dark section — text + video + questions in one black wrapper -->
+        <div class="twingate-dark-section">
+          <div class="project__text twingate-dark-section__text">
+            <div class="project__text-left">
+              <div class="project__section-label">Research</div>
+            </div>
+            <div class="project__text-right">
+              <h2>How information is delivered is just as important as the information itself.</h2>
+              <p>Using progressive disclosure to reduce cognitive overload by not overwhelming users all at once. Visual indicators also help in providing information in sizable chunks. Humans are visual creatures, hence using thumbnails and icons helps make it easier to grasp information.</p>
+            </div>
+          </div>
+
+          <div class="project__image-full twingate-scaled twingate-scaled--white">
+            <video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-2.mp4"></video>
+          </div>
+
+          <div class="twingate-questions-wrap">
+            <div class="twingate-question">
+              <div class="twingate-question__inner">
+                <span class="material-symbols-outlined twingate-question__icon">bar_chart</span>
+                <h2>What is the most effective way to categorize information?</h2>
+              </div>
+            </div>
+
+            <div class="twingate-question">
+              <div class="twingate-question__inner">
+                <span class="material-symbols-outlined twingate-question__icon">grid_view</span>
+                <h2>How can different sections containing articles be visually differentiated from each other?</h2>
+              </div>
+            </div>
+
+            <div class="twingate-question">
+              <div class="twingate-question__inner">
+                <span class="material-symbols-outlined twingate-question__icon">download</span>
+                <h2>How can you display and gain most traction towards the most important articles in the documentation site?</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="project__image-full twingate-scaled twingate-scaled--dark">
+            <video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-3.mp4"></video>
+          </div>
+        </div>
+
+        <!-- Collaboration -->
+        <div class="project__text">
+          <div class="project__text-left">
+            <div class="project__section-label">Collaboration</div>
+            <h2>Twingate wanted more article details shown upfront, while the Design team pushed for a cleaner, simpler experience.</h2>
+          </div>
+          <div class="project__text-right">
+            <p>This project was a collaborative effort between Design, Sales &amp; Engineering. Sales helped us decide the structure and hierarchy of articles, from most important and engaging to least. Engineering helped bring to life the prototype I created on Framer. Product Management helped us test out our prototype to see what works best for our users.</p>
+            <p>As a part of the newly designed components, I also created illustrated thumbnails for each of the featured articles, using components within Twingate's library.</p>
+          </div>
+        </div>
+
+        <div class="project__image-grid">
+          <div class="project__video-cell"><video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-4.mp4"></video></div>
+          <div class="project__video-cell"><video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-5.mp4"></video></div>
         </div>
 
         <!-- Solution -->
@@ -97,39 +168,25 @@
 
         <div class="project__image-full">
           <div class="project__img-placeholder"></div>
-          <div class="project__caption">1.4 — Finalized interface for the newly designed and restructured Documentation site.</div>
-        </div>
-
-        <!-- Collaboration -->
-        <div class="project__text">
-          <div class="project__text-left">
-            <div class="project__section-label">Collaboration</div>
-            <h2>Cross-functional Work</h2>
-          </div>
-          <div class="project__text-right">
-            <p>This project was a collaborative effort between Design, Sales &amp; Engineering. Sales helped us decide the structure and hierarchy of articles, from most important and engaging to least. Engineering helped bring to life the prototype I created on Framer. Product Management helped us test out our prototype to see what works best for our users.</p>
-            <p>As a part of the newly designed components, I also created illustrated thumbnails for each of the featured articles, using components within Twingate's library.</p>
-          </div>
-        </div>
-
-        <div class="project__image-grid">
-          <div class="project__img-placeholder"></div>
-          <div class="project__img-placeholder"></div>
         </div>
 
         <!-- Project 2: Policy Controls -->
         <div class="project__text">
           <div class="project__text-left">
-            <div class="project__section-label">Project 2 — Policy Controls</div>
-            <h2>Project 2</h2>
+            <div class="project__section-label">Project 2</div>
           </div>
           <div class="project__text-right">
             <p>Users newly onboarded to teams using Twingate for access and policy management often encountered difficulties understanding and navigating the controls. Device security controls for each policy were hidden in a separate tab, requiring multiple clicks for users to access basic information.</p>
           </div>
         </div>
 
+        <!-- Pull quote -->
+        <div class="project__pullquote">
+          <h2>There's a disconnect between the applied policies and the information they contain.</h2>
+        </div>
+
         <div class="project__image-full">
-          <div class="project__img-placeholder"></div>
+          <video autoplay loop muted playsinline preload="auto" src="/images/twingate/twingate-6.mp4"></video>
         </div>
 
         <!-- Research -->
@@ -163,7 +220,6 @@
 
         <div class="project__image-full">
           <div class="project__img-placeholder"></div>
-          <div class="project__caption">2.4 — Finalized popover components for policy controls.</div>
         </div>
 
       </section>

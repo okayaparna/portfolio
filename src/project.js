@@ -97,6 +97,21 @@ mountModalWidget()
   })
 })()
 
+// Scroll-in animation for elements with opacity/transform transitions
+;(function initScrollReveal() {
+  const els = document.querySelectorAll('.twingate-question')
+  if (!els.length) return
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible')
+        io.unobserve(entry.target)
+      }
+    }
+  }, { threshold: 0.15 })
+  els.forEach((el) => io.observe(el))
+})()
+
 // Neon green custom cursor + glitchy character trail (shared with landing)
 ;(function initCursorAndTrail() {
   const COLOR = '#D3FF41'
