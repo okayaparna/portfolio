@@ -7,7 +7,7 @@ export function mountNav(host) {
 
   host.innerHTML = `
     <nav class="cluster" aria-label="Primary">
-      <a class="pod pod--top"   href="projects.html"          aria-label="Contact">
+      <a class="pod pod--top"   href="mailto:aparnakrishnan81@gmail.com" aria-label="Contact">
         <span class="pod__icon">${glyphs.dots3}</span>
       </a>
       <a class="pod pod--left"  href="projects.html#archive"  aria-label="Experiments">
@@ -16,7 +16,7 @@ export function mountNav(host) {
       <span class="pod pod--right" data-action="work" aria-label="Work" role="button" tabindex="0">
         <span class="pod__icon">${glyphs.infoI}</span>
       </span>
-      <span class="pod pod--bottom">
+      <span class="pod pod--bottom" data-action="about" role="button" tabindex="0">
         <span class="pod__icon">${glyphs.plusFlower}</span>
       </span>
 

@@ -324,6 +324,7 @@ body.project-page.theme-mid.contrast-low {
   font-family: var(--serif);
   font-weight: 400;
   font-size: 20px;
+  text-transform: uppercase;
   color: #000;
   background: #D3FF41;
   border-radius: 8px;

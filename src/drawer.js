@@ -2,13 +2,12 @@ import { openSneakPeek } from './sneak-peek.js'
 
 const SNEAK_PEEK_KEYS = {
   'align-with-ash.html': 'align-with-ash',
-  'ash-configurations.html': 'ash-configurations',
 }
 
 const PROJECTS = [
   { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html', thumbnail: '/images/align-with-ash/thumbnail.png', comingSoon: 'Sneak peek?' },
   { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: 'Coming soon' },
-  { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: 'ash-configurations.html', comingSoon: 'Sneak peek?' },
+  { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: 'ash-configurations.html', thumbnail: '/images/ash-configurations/thumbnail.mp4', comingSoon: 'Coming soon' },
   { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html', thumbnail: '/images/wired/thumbnail.jpg' },
   { title: 'Twingate', meta: ['Twingate', 'Summer 2024'], desc: 'Designing for prioritizing Information Hierarchy and Reducing navigational Friction for an enterprise product', href: 'twingate.html' },
@@ -59,10 +58,23 @@ export function createDrawer() {
     img.className = 'drawer__card-image'
     if (project.thumbnail) {
       const base = import.meta.env.BASE_URL.replace(/\/$/, '')
-      const imgEl = document.createElement('img')
-      imgEl.src = `${base}${project.thumbnail}`
-      imgEl.alt = project.title
-      img.appendChild(imgEl)
+      const isVideo = /\.(mov|mp4|webm)$/i.test(project.thumbnail)
+      if (isVideo) {
+        const vidEl = document.createElement('video')
+        vidEl.setAttribute('src', `${base}${project.thumbnail}`)
+        vidEl.setAttribute('autoplay', '')
+        vidEl.setAttribute('loop', '')
+        vidEl.setAttribute('muted', '')
+        vidEl.setAttribute('playsinline', '')
+        vidEl.setAttribute('preload', 'auto')
+        vidEl.muted = true
+        img.appendChild(vidEl)
+      } else {
+        const imgEl = document.createElement('img')
+        imgEl.src = `${base}${project.thumbnail}`
+        imgEl.alt = project.title
+        img.appendChild(imgEl)
+      }
     }
 
     if (project.comingSoon) {

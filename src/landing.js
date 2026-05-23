@@ -3,6 +3,8 @@ import './blob.css'
 import { startPetals3D } from './petals3d.js'
 import { mountNav, minimizePods, restorePods } from './nav.js'
 import { createDrawer, openDrawer, closeDrawer } from './drawer.js'
+import { createAbout, openAbout, closeAbout } from './about.js'
+// import { createPhilosophy } from './philosophy.js'
 
 // AKR logo — prevent reload, close drawer if open
 const akrLink = document.querySelector('.mark__initials')
@@ -26,6 +28,12 @@ mountNav(document.getElementById('nav-mount'))
 // Drawer setup
 createDrawer()
 
+// About panel setup
+createAbout()
+
+// Philosophy card — disabled for now
+// createPhilosophy()
+
 function setSecondaryVisibility(hidden) {
   const els = [document.querySelector('.mark__bio'), document.querySelector('.timestamp')]
   els.forEach(el => { if (el) el.style.opacity = hidden ? '0' : '' })
@@ -33,6 +41,7 @@ function setSecondaryVisibility(hidden) {
 
 function handleClose() {
   closeDrawer()
+  closeAbout()
   restorePods()
   setSecondaryVisibility(false)
 }
@@ -44,6 +53,15 @@ document.addEventListener('click', (e) => {
     setSecondaryVisibility(true)
     minimizePods()
     openDrawer(handleClose)
+    return
+  }
+
+  const aboutPod = e.target.closest('[data-action="about"]')
+  if (aboutPod) {
+    e.preventDefault()
+    setSecondaryVisibility(true)
+    minimizePods()
+    openAbout(handleClose)
   }
 })
 

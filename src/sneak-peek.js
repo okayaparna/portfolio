@@ -15,11 +15,11 @@ const SNEAK_PEEK_CONTENT = {
     tldr: {
       heading: 'TL;DR',
       cards: [
-        { title: 'Design + Engineering', desc: 'Built across Claude Code, Cursor, and Figma.', color: '#F5E6A3' },
-        { title: 'Research', desc: 'Started from our in-house therapy model, layered in EFT, IBCT, Gottman, and SFBT modalities with our Head of Research.', color: '#E8D0F0' },
-        { title: 'Testing', desc: 'Multiple rounds of medical and technical jailbreak testing plus preliminary user studies on conversation quality and UX.', color: '#D0E8F0' },
-        { title: 'Data & Privacy', desc: 'Set up a privacy-safe PostHog pipeline, extended to surface qualitative signal for near real-time iteration.', color: '#D4EDDA' },
-        { title: 'Launch', desc: '~2,000 couples in 4 days via organic email and LinkedIn marketing.', color: '#F5E6A3' },
+        { title: 'Design + Engineering', desc: 'Built across Claude Code, Cursor, and Figma.', icon: 'architecture', accent: '#6C63FF' },
+        { title: 'Research', desc: 'Started from our in-house therapy model, layered in EFT, IBCT, Gottman, and SFBT modalities with our Head of Research.', icon: 'psychology', accent: '#E87DB5' },
+        { title: 'Testing', desc: 'Multiple rounds of medical and technical jailbreak testing plus preliminary user studies on conversation quality and UX.', icon: 'bug_report', accent: '#4ECDC4' },
+        { title: 'Data & Privacy', desc: 'Set up a privacy-safe PostHog pipeline, extended to surface qualitative signal for near real-time iteration.', icon: 'analytics', accent: '#FF8A65' },
+        { title: 'Launch', desc: '~2,000 couples in 4 days via organic email and LinkedIn marketing.', icon: 'rocket_launch', accent: '#7E57C2' },
       ],
     },
     closing: `The fastest, most experimental feedback loop I've ever run. More on this soon.`,
@@ -42,6 +42,14 @@ let panelEl = null
 let isPanelOpen = false
 
 function buildPanel() {
+  // Load Material Symbols if not already present
+  if (!document.querySelector('link[href*="Material+Symbols"]')) {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0'
+    document.head.appendChild(link)
+  }
+
   const el = document.createElement('div')
   el.className = 'sneak-peek'
 
@@ -107,7 +115,7 @@ function renderContent(key) {
     html += `  <h2>${data.tldr.heading}</h2>`
     html += `  <div class="sneak-peek__tldr-grid">`
     for (const card of data.tldr.cards) {
-      html += `<div class="sneak-peek__tldr-card" style="background:${card.color}">`
+      html += `<div class="sneak-peek__tldr-card">`
       html += `  <h3 class="sneak-peek__tldr-card-title">${card.title}</h3>`
       html += `  <p>${card.desc}</p>`
       html += `</div>`
