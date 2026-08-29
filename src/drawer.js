@@ -6,7 +6,6 @@ const SNEAK_PEEK_KEYS = {
 
 const PROJECTS = [
   { title: 'Align with Ash', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Asynchronous couples therapy assisted by Ash for couples on the go.', href: 'align-with-ash.html', thumbnail: '/images/align-with-ash/thumbnail.png', comingSoon: 'Sneak peek?' },
-  { title: 'Phia Rewards', meta: ['Phia', 'Fall 2025'], desc: 'Reimagining rewards as access, impact, and experiences with Phia.', href: 'phia-rewards.html', thumbnail: '/images/phia-rewards/hero.png', comingSoon: 'Coming soon' },
   { title: 'Ash Configurations', meta: ['Ash by Slingshot AI', 'Spring 2026'], desc: 'Allowing users to personalize their therapy agent as a visual experience first.', href: 'ash-configurations.html', thumbnail: '/images/ash-configurations/thumbnail.mp4', comingSoon: 'Coming soon' },
   { title: 'Disciple', meta: ['Parsons School of Design', 'Independent', 'Spring 2025'], desc: 'An immersive gaming experience that dives into afterlife from a Buddhist lens', href: 'disciple.html', thumbnail: '/images/disciple/thumbnail.png' },
   { title: 'WIRED Magazine Rebrand', meta: ['Parsons School of Design', 'Independent', 'Spring 2024'], desc: "Reimagining an Iconic Tech Magazine's branding to be at par with their mission", href: 'wired-rebrand.html', thumbnail: '/images/wired/thumbnail.jpg' },

@@ -747,12 +747,6 @@ body.project-page.theme-mid.contrast-low {
   background: url('/images/disciple/thumbnail_bg_final.png') center/cover no-repeat;
 }
 
-[data-project="phia-rewards"] .project__hero-image {
-  height: 90vh;
-  object-fit: cover;
-  object-position: center center;
-}
-
 /* Hero video */
 video.project__hero-image {
   width: 100%;

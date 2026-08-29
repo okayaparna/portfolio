@@ -1,6 +1,5 @@
 const PROJECTS = [
   { slug: 'align-with-ash', title: 'Align with Ash' },
-  { slug: 'phia-rewards', title: 'Phia Rewards' },
   { slug: 'disciple', title: 'Disciple' },
   { slug: 'tns-commencement-2025', title: 'The New School Commencement 2025' },
   { slug: 'parsons-benefit-2024', title: 'The 75th Parsons Benefit' },
