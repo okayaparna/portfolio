@@ -15,7 +15,6 @@ export default defineConfig({
         parsons_benefit: resolve(__dirname, 'parsons-benefit-2024.html'),
         wired_rebrand: resolve(__dirname, 'wired-rebrand.html'),
         twingate: resolve(__dirname, 'twingate.html'),
-        gundi_studios: resolve(__dirname, 'gundi-studios.html'),
         ash_configurations: resolve(__dirname, 'ash-configurations.html'),
       },
     },

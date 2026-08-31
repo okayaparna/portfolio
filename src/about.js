@@ -6,6 +6,9 @@ let panelEl = null
 let isOpen = false
 
 export function createAbout() {
+  // See createDrawer: the open flag has to be reset for the new page.
+  isOpen = false
+
   const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
   const el = document.createElement('div')
@@ -91,7 +94,8 @@ export function createAbout() {
 }
 
 export function openAbout(onCloseCallback) {
-  if (!panelEl) createAbout()
+  // Rebuild if a navigation detached the previous panel.
+  if (!panelEl || !panelEl.isConnected) createAbout()
   if (isOpen) return
 
   const close = panelEl.querySelector('.about-panel__close')

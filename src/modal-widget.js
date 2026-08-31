@@ -1,3 +1,4 @@
+import { pageSignal } from './page-lifecycle.js'
 const PROJECTS = [
   { slug: 'align-with-ash', title: 'Align with Ash' },
   { slug: 'disciple', title: 'Disciple' },
@@ -5,7 +6,6 @@ const PROJECTS = [
   { slug: 'parsons-benefit-2024', title: 'The 75th Parsons Benefit' },
   { slug: 'wired-rebrand', title: 'WIRED Magazine Rebrand' },
   { slug: 'twingate', title: 'Twingate' },
-  { slug: 'gundi-studios', title: 'Gundi Studios' },
 ]
 
 export function mountModalWidget() {
@@ -93,7 +93,7 @@ export function mountModalWidget() {
       widget.classList.remove('is-open')
       closeTldr()
     }
-  })
+  }, { signal: pageSignal() })
 
   function buildSectionLinks() {
     const container = widget.querySelector('.mw__section-links')

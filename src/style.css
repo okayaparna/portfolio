@@ -241,7 +241,7 @@ a {
 }
 
 /* =========================================================
-   Cluster nav — 4 frosted lilac pill pods in a diamond
+   Cluster nav — 3 frosted lilac pill pods in a fan
    ========================================================= */
 .cluster {
   position: fixed;
@@ -249,8 +249,8 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 70;
-  width: 230px;
-  height: 230px;
+  width: 300px;
+  height: 200px;
   pointer-events: none;        /* children re-enable */
   overflow: visible;
 }
@@ -260,8 +260,8 @@ a {
   display: grid;
   place-items: center;
   pointer-events: auto;
-  width: 78px;
-  height: 96px;
+  width: 76px;
+  height: 120px;
   border-radius: 999px;        /* pill shape */
   overflow: visible;
   background: rgba(232, 221, 240, 0.78);  /* lilac-2 frosted */
@@ -272,6 +272,10 @@ a {
   box-shadow:
     inset 0 0 16px rgba(255, 255, 255, 0.45),
     0 8px 24px -10px rgba(120, 90, 110, 0.28);
+  --tx: -50%;
+  --ty: 0;
+  --rot: 0deg;
+  transform: translate(var(--tx), var(--ty)) rotate(var(--rot));
   transition:
     transform 0.5s var(--ease-out),
     background 0.3s var(--ease-out),
@@ -279,7 +283,7 @@ a {
 }
 
 .pod:hover {
-  transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.08);
+  transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.08);
   background: rgba(216, 199, 228, 0.92);
   color: var(--ink);
 }
@@ -293,31 +297,41 @@ a {
   height: 26px;
 }
 
-/* Diamond placements — translate to center each pod on its anchor */
-.pod--top {
-  top: 0;     left: 50%;
-  --tx: -50%; --ty: 0;
-  transform: translate(var(--tx), var(--ty));
+/* Entrance — the whole console, stem and bud rise in from below the frame */
+@keyframes cluster-rise {
+  from {
+    transform: translate(-50%, calc(-50% + 75vh));
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+.cluster--intro {
+  animation: cluster-rise 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cluster--intro { animation: none; }
+}
+
+/* Fan placements — centre petal upright, outer petals splayed and dropped.
+   Each pod is anchored by its own centre, so --tx stays at -50%. */
+.pod--center {
+  top: 0;   left: 50%;
+  --rot: 0deg;
 }
 .pod--left {
-  top: 50%;   left: 0;
-  --tx: 0;    --ty: -50%;
-  transform: translate(var(--tx), var(--ty));
+  top: 25%; left: 17%;
+  --rot: -30deg;
 }
 .pod--right {
-  top: 50%;   right: 0;
-  --tx: 0;    --ty: -50%;
-  transform: translate(var(--tx), var(--ty));
-}
-.pod--bottom {
-  bottom: 0;  left: 50%;
-  --tx: -50%; --ty: 0;
-  transform: translate(var(--tx), var(--ty));
+  top: 25%; left: 83%;
+  --rot: 30deg;
   cursor: default;
 }
-.pod--bottom:hover {
-  transform: translate(var(--tx), var(--ty)) scale(1.08);
-  background: rgba(232, 221, 240, 0.78);    /* no color shift on decorative */
+.pod--right:hover {
+  background: rgba(232, 221, 240, 0.78);    /* no colour shift on the About petal */
   color: var(--lilac-4);
 }
 
@@ -370,7 +384,7 @@ a {
     0 1px 3px rgba(60, 55, 48, 0.18);
 }
 
-.landing .pod--bottom:hover {
+.landing .pod--right:hover {
   background:
     linear-gradient(
       155deg,
@@ -395,15 +409,16 @@ a {
 .cluster__stem {
   position: absolute;
   left: 50%;
-  bottom: -2px;
-  /* extend down to the bottom of the viewport, accounting for translate offset */
-  height: calc(50vh - 115px - 6px);   /* cluster center→viewport-bottom minus pod half-height */
+  /* start 2px inside the base of the centre pod so the join is seamless */
+  top: 118px;
+  /* run down into the bud at the frame edge */
+  height: calc(50vh - 18px);
   width: 1.5px;
   background: linear-gradient(to bottom,
     rgba(184, 160, 200, 0.7),
     rgba(184, 160, 200, 0.25) 70%,
     rgba(184, 160, 200, 0.1));
-  transform: translate(-50%, 100%);
+  transform: translateX(-50%);
   pointer-events: none;
 }
 
@@ -411,7 +426,7 @@ a {
 .cluster__bud {
   position: absolute;
   left: 50%;
-  top: calc(100% + (50vh - 115px - 6px));
+  top: calc(50vh + 94px);
   transform: translate(-50%, 4px);
   display: grid;
   place-items: center;
@@ -479,8 +494,10 @@ a {
 }
 
 @media (max-width: 600px) {
-  .cluster { width: 200px; height: 200px; }
-  .pod { width: 68px; height: 84px; }
+  .cluster { width: 260px; height: 176px; }
+  .pod { width: 66px; height: 104px; }
+  .cluster__stem { top: 102px; height: calc(50vh - 14px); }
+  .cluster__bud  { top: calc(50vh + 82px); }
 }
 
 /* =========================================================
@@ -1536,8 +1553,8 @@ a {
   transform: translateX(-50%);
   z-index: 80;
   display: grid;
-  grid-template-columns: 28px 28px 28px;
-  grid-template-rows: 28px 28px;
+  grid-template-columns: repeat(5, 28px);
+  grid-template-rows: 28px;
   gap: 4px;
   padding: 8px;
   border-radius: 16px;

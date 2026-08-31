@@ -54,6 +54,28 @@ export const glyphs = {
     </svg>
   `,
 
+  // Rounded square (Work)
+  square: `
+    <svg viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="15" width="34" height="34" rx="10"/>
+    </svg>
+  `,
+
+  // Rounded triangle (Contact) — stroke with round joins softens the corners
+  triangle: `
+    <svg viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M32 20 L47 45 L17 45 Z"
+            stroke="currentColor" stroke-width="11" stroke-linejoin="round"/>
+    </svg>
+  `,
+
+  // Circle (About)
+  circle: `
+    <svg viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="17"/>
+    </svg>
+  `,
+
   // Tiny bud (decorative)
   bud: `
     <svg viewBox="0 0 64 64" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

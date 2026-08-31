@@ -7,17 +7,14 @@ export function mountNav(host) {
 
   host.innerHTML = `
     <nav class="cluster" aria-label="Primary">
-      <a class="pod pod--top"   href="mailto:aparnakrishnan81@gmail.com" aria-label="Contact">
-        <span class="pod__icon">${glyphs.dots3}</span>
+      <a class="pod pod--left" href="mailto:aparnakrishnan81@gmail.com" aria-label="Contact">
+        <span class="pod__icon">${glyphs.triangle}</span>
       </a>
-      <a class="pod pod--left"  href="projects.html#archive"  aria-label="Experiments">
-        <span class="pod__icon">${glyphs.flower4}</span>
-      </a>
-      <span class="pod pod--right" data-action="work" aria-label="Work" role="button" tabindex="0">
-        <span class="pod__icon">${glyphs.infoI}</span>
+      <span class="pod pod--center" data-action="work" aria-label="Work" role="button" tabindex="0">
+        <span class="pod__icon">${glyphs.square}</span>
       </span>
-      <span class="pod pod--bottom" data-action="about" role="button" tabindex="0">
-        <span class="pod__icon">${glyphs.plusFlower}</span>
+      <span class="pod pod--right" data-action="about" aria-label="About" role="button" tabindex="0">
+        <span class="pod__icon">${glyphs.circle}</span>
       </span>
 
       <span class="cluster__stem" aria-hidden="true"></span>
@@ -42,11 +39,11 @@ function getMinimizedTargets() {
   const podW = isMobile ? 60 : 70
   const podH = isMobile ? 74 : 86
   const gap = isMobile ? 10 : 14
-  const totalW = podW * 4 + gap * 3
+  const totalW = podW * 3 + gap * 2
   const startX = (vw - totalW) / 2
   const y = isMobile ? (vh - 20 - podH / 2) : (37 + podH / 2)
 
-  return [0, 1, 2, 3].map(i => ({
+  return [0, 1, 2].map(i => ({
     x: startX + i * (podW + gap) + podW / 2,
     y,
     w: podW,
@@ -88,17 +85,16 @@ export function minimizePods() {
 
   const targets = getMinimizedTargets()
 
-  // Work pod leads, then anticlockwise: Right(Work) → Top → Left → Bottom
-  const clockwise = [
-    clusterEl.querySelector('.pod--right'),
-    clusterEl.querySelector('.pod--top'),
+  // Work pod leads, then outward: Center(Work) → Left → Right
+  const leadOrder = [
+    clusterEl.querySelector('.pod--center'),
     clusterEl.querySelector('.pod--left'),
-    clusterEl.querySelector('.pod--bottom'),
+    clusterEl.querySelector('.pod--right'),
   ]
 
-  const fromRects = clockwise.map(p => p ? getPodRect(p) : null)
+  const fromRects = leadOrder.map(p => p ? getPodRect(p) : null)
 
-  clockwise.forEach(pod => {
+  leadOrder.forEach(pod => {
     if (!pod) return
     document.body.appendChild(pod)
   })
@@ -106,7 +102,7 @@ export function minimizePods() {
   const STAGGER = 100
   const DURATION = 500
 
-  const animations = clockwise.map((pod, i) => {
+  const animations = leadOrder.map((pod, i) => {
     if (!pod || !fromRects[i]) return null
     const from = fromRects[i]
     const to = targets[i]
@@ -128,7 +124,7 @@ export function minimizePods() {
   clusterEl.classList.add('is-minimized')
 
   return Promise.all(animations.map(a => a.finished)).then(() => {
-    clockwise.forEach((pod, i) => {
+    leadOrder.forEach((pod, i) => {
       if (!pod) return
       const t = targets[i]
       pod.style.left = (t.x - t.w / 2) + 'px'
@@ -144,12 +140,11 @@ export function minimizePods() {
 export function restorePods() {
   if (!clusterEl) return Promise.resolve()
 
-  // Reverse: Bottom → Left → Top → Right(Work) (last one home is the leader)
+  // Reverse: Right → Left → Center(Work) (last one home is the leader)
   const reverseOrder = [
-    document.querySelector('.pod--bottom'),
-    document.querySelector('.pod--left'),
-    document.querySelector('.pod--top'),
     document.querySelector('.pod--right'),
+    document.querySelector('.pod--left'),
+    document.querySelector('.pod--center'),
   ]
 
   const stem = clusterEl.querySelector('.cluster__stem')
@@ -176,7 +171,7 @@ export function restorePods() {
   clusterEl.classList.remove('is-minimized')
   void clusterEl.offsetHeight
 
-  const diamondPositions = reverseOrder.map(p => p ? getPodRect(p) : null)
+  const fanPositions = reverseOrder.map(p => p ? getPodRect(p) : null)
 
   reverseOrder.forEach(pod => {
     if (!pod) return
@@ -187,9 +182,9 @@ export function restorePods() {
   const DURATION = 500
 
   const animations = reverseOrder.map((pod, i) => {
-    if (!pod || !currentPositions[i] || !diamondPositions[i]) return null
+    if (!pod || !currentPositions[i] || !fanPositions[i]) return null
     const from = currentPositions[i]
-    const to = diamondPositions[i]
+    const to = fanPositions[i]
     const kf = arcKeyframes(from, to, false)
 
     pod.style.position = 'fixed'

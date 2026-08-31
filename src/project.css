@@ -57,7 +57,10 @@
   font-display: swap;
 }
 
-:root {
+/* Scoped to the project page rather than :root: with client-side routing this
+   stylesheet is loaded alongside style.css, and an unscoped :root here would
+   override the landing page's --bg globally. */
+body.project-page {
   --bg: #FBFAF7;
   --ink: #6B5F76;
   --ink-muted: #A89FB0;

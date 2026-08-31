@@ -135,7 +135,12 @@ function renderContent(key) {
 }
 
 export function openSneakPeek(key) {
-  if (!panelEl) buildPanel()
+  // A navigation detaches the panel without clearing these module refs.
+  if (!panelEl || !panelEl.isConnected) {
+    panelEl = null
+    isPanelOpen = false
+    buildPanel()
+  }
   if (isPanelOpen) return
 
   renderContent(key)
