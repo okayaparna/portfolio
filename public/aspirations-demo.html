@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aspirations — demo</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: transparent;
+        font-family: 'ABC Diatype', ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 16px;
+      }
+
+      /* Everything derives from --s, so bezel, corners, island and the app
+         inside all stay in proportion at any size. 426x898 is the 402x874
+         screen plus its bezel. */
+      .phone {
+        position: relative;
+        width: calc(426px * var(--s, 1));
+        height: calc(898px * var(--s, 1));
+        flex: none;
+        padding: calc(12px * var(--s, 1));
+        border-radius: calc(58px * var(--s, 1));
+        background: #0E0E10;
+        box-shadow: 0 0 0 2px #2A2A2E, 0 32px 64px -24px rgba(20, 16, 28, 0.45);
+      }
+
+      .phone__screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: calc(46px * var(--s, 1));
+        overflow: hidden;
+        background: #FFFDFA;  /* surfaceBg (sand[1]) — the writing screen's own ground */
+      }
+
+      /* The app always renders at a real phone's logical size and is scaled to
+         fit, so type and spacing keep true proportions. Absolute so its fixed
+         402px width can't force the shell wider. */
+      .phone__app {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 402px;
+        height: 874px;
+        border: 0;
+        transform-origin: top left;
+        transform: scale(var(--s, 1));
+        opacity: 0;
+        transition: opacity 0.5s ease-out;
+      }
+      .phone__app.is-ready { opacity: 1; }
+
+      .phone__island {
+        position: absolute;
+        top: calc(24px * var(--s, 1));
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(118px * var(--s, 1));
+        height: calc(33px * var(--s, 1));
+        border-radius: 100px;
+        background: #0E0E10;
+        pointer-events: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .phone__app { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="phone" id="phone">
+        <div class="phone__screen" id="screen"></div>
+        <span class="phone__island" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var SHELL_W = 426, SHELL_H = 898; // 402x874 screen + 12px bezel
+        var phone = document.getElementById('phone');
+        var screenEl = document.getElementById('screen');
+
+        function fit() {
+          var w = window.innerWidth - 32;
+          var h = window.innerHeight - 32;
+          if (w <= 0 || h <= 0) return;
+          phone.style.setProperty('--s', Math.min(1, w / SHELL_W, h / SHELL_H).toFixed(4));
+        }
+        fit();
+        window.addEventListener('resize', fit);
+
+        var frame = document.createElement('iframe');
+        frame.className = 'phone__app';
+        frame.src = 'aspirations-app/index.html';
+        frame.title = 'Aspirations';
+        frame.setAttribute('allow', 'autoplay');
+        frame.addEventListener('load', function () {
+          // The load event fires before Flutter's first paint; the screen
+          // behind is already the app's own background colour, so this just
+          // avoids a flash of half-drawn UI.
+          setTimeout(function () { frame.classList.add('is-ready'); }, 900);
+        });
+        screenEl.appendChild(frame);
+      })();
+    </script>
+  </body>
+</html>
