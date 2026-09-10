@@ -28,6 +28,18 @@
     padding:16px 20px 20px; max-width:1340px; margin:0 auto; min-height:100vh}
   @media (max-width:980px){ .lab{grid-template-columns:1fr} }
 
+  /* Above the breakpoint both columns share one row height, so the preview and the
+     transport finish level with the bottom of the control panel. The canvas takes
+     whatever height is left instead of dictating it through an aspect ratio. */
+  @media (min-width:981px){
+    .lab{height:100vh; min-height:0; align-items:stretch}
+    .panel{display:flex; flex-direction:column; min-height:0}
+    .pane.is-on{flex:1 1 auto; min-height:0; overflow-y:auto}
+    .stage{min-height:0}
+    .canvas-card{flex:1 1 auto; aspect-ratio:auto; min-height:0}
+    .card--pad{flex:0 0 auto}
+  }
+
   .topbar{grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; margin-bottom:2px}
   .wordmark{font-size:14px; font-weight:600; letter-spacing:-.01em}
   .wordmark span{color:var(--ink-3); font-weight:400}
