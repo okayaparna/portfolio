@@ -26,13 +26,21 @@
     transition:background .3s, color .3s}
   .lab{display:grid; grid-template-columns:310px minmax(0,1fr); gap:18px;
     padding:16px 20px 20px; max-width:1340px; margin:0 auto; min-height:100vh}
-  @media (max-width:980px){ .lab{grid-template-columns:1fr} }
+  /* Stacked: the animation leads, the controls follow. An embed narrower than the
+     breakpoint must still open on the thing people came to see. */
+  @media (max-width:760px){
+    .lab{grid-template-columns:1fr}
+    .topbar{order:-2}
+    .stage{order:-1}
+  }
 
-  /* Above the breakpoint both columns share one row height, so the preview and the
+  /* Above 760px both columns share one row height, so the preview and the
      transport finish level with the bottom of the control panel. The canvas takes
      whatever height is left instead of dictating it through an aspect ratio. */
-  @media (min-width:981px){
-    .lab{height:100vh; min-height:0; align-items:stretch}
+  @media (min-width:761px){
+    /* explicit rows: with plain auto rows a tall tab sized the row to its content
+       and squeezed the preview (187px inside a 1200x720 iframe) */
+    .lab{height:100vh; min-height:0; align-items:stretch; grid-template-rows:auto minmax(0,1fr)}
     .panel{display:flex; flex-direction:column; min-height:0}
     .pane.is-on{flex:1 1 auto; min-height:0; overflow-y:auto}
     .stage{min-height:0}
@@ -138,7 +146,7 @@
   /* voice mode: the app's screen, inside the preview box */
   .vm{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between;
     pointer-events:none; z-index:2}
-  .vm[hidden]{display:none}
+  .vm[hidden], .try[hidden]{display:none}
   .vm__bar{display:flex; align-items:center; padding:18px 20px; pointer-events:auto}
   .vm__back{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
     background:var(--well); color:var(--ink); display:flex; align-items:center; justify-content:center}
@@ -761,6 +769,9 @@
     });
   }
 
+  // Until the token Worker is deployed there is nobody to talk to, so don't show
+  // visitors a button that can only say so. Setting TOKEN_ENDPOINT brings it back.
+  if(!TOKEN_ENDPOINT) $('btn-try').hidden = true;
   $('btn-try').addEventListener('click', enterVoiceMode);
   $('vm-back').addEventListener('click', exitVoiceMode);
   window.addEventListener('pagehide', exitVoiceMode);
