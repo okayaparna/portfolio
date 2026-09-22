@@ -230,20 +230,20 @@
     <!-- RESPONSE -->
     <section class="pane" data-pane="response">
       <div class="group">
-        <div class="row"><span class="label">Gain</span><span class="value" id="v-gain">1.4×</span></div>
-        <input class="slider" type="range" id="s-gain" min="0.3" max="3" step="0.05" value="1.4" />
+        <div class="row"><span class="label">Gain</span><span class="value" id="v-gain">0.7×</span></div>
+        <input class="slider" type="range" id="s-gain" min="0.3" max="3" step="0.05" value="0.7" />
       </div>
       <div class="group">
-        <div class="row"><span class="label">Attack</span><span class="value" id="v-attack">40 ms</span></div>
-        <input class="slider" type="range" id="s-attack" min="0" max="300" step="5" value="40" />
+        <div class="row"><span class="label">Attack</span><span class="value" id="v-attack">155 ms</span></div>
+        <input class="slider" type="range" id="s-attack" min="0" max="300" step="5" value="155" />
       </div>
       <div class="group">
-        <div class="row"><span class="label">Release</span><span class="value" id="v-release">180 ms</span></div>
-        <input class="slider" type="range" id="s-release" min="20" max="1200" step="10" value="180" />
+        <div class="row"><span class="label">Release</span><span class="value" id="v-release">100 ms</span></div>
+        <input class="slider" type="range" id="s-release" min="20" max="1200" step="10" value="100" />
       </div>
       <div class="group">
-        <div class="row"><span class="label">Noise floor</span><span class="value" id="v-floor">0.04</span></div>
-        <input class="slider" type="range" id="s-floor" min="0" max="0.3" step="0.005" value="0.04" />
+        <div class="row"><span class="label">Noise floor</span><span class="value" id="v-floor">0.14</span></div>
+        <input class="slider" type="range" id="s-floor" min="0" max="0.3" step="0.005" value="0.14" />
       </div>
       <div class="group">
         <p class="sublabel">Curve</p>
@@ -358,7 +358,7 @@
   const SEED = 42;
 
   const S = { voice:VOICES[0], sample:null, driveAudio:false, manualAmp:0,
-              gain:1.4, attack:40, release:180, floor:.04, curve:'linear',
+              gain:0.7, attack:155, release:100, floor:.14, curve:'linear',
               trim:TRIMS[0], theme:'light', live:false, voiceMode:false };
 
   const $ = id => document.getElementById(id);
