@@ -146,7 +146,10 @@
   /* voice mode: the app's screen, inside the preview box */
   .vm{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between;
     pointer-events:none; z-index:2}
-  .vm[hidden], .try[hidden]{display:none}
+  .vm[hidden], .try[hidden], .wave-empty[hidden]{display:none}
+  .wave-empty{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:var(--ink-3); pointer-events:none}
+  .play:disabled{opacity:.3; cursor:default}
   .vm__bar{display:flex; align-items:center; padding:18px 20px; pointer-events:auto}
   .vm__back{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
     background:var(--well); color:var(--ink); display:flex; align-items:center; justify-content:center}
@@ -209,7 +212,7 @@
     <!-- VOICE -->
     <section class="pane is-on" data-pane="voice">
       <div class="group"><div class="voices" id="voices"></div></div>
-      <div class="group">
+      <div class="group" id="grp-sample" hidden>
         <p class="sublabel">Voice sample</p>
         <div class="field">
           <select id="audio-select"></select>
@@ -217,10 +220,10 @@
         </div>
       </div>
       <div class="row"><span class="label">Drive from audio</span>
-        <button class="toggle is-on" id="tg-audio" role="switch" aria-checked="true"></button></div>
+        <button class="toggle" id="tg-audio" role="switch" aria-checked="false"></button></div>
       <div class="group" style="margin-top:16px">
         <div class="row"><span class="label">Amplitude</span><span class="value" id="v-amp">0.50</span></div>
-        <input class="slider" type="range" id="s-amp" min="0" max="1" step="0.01" value="0.5" disabled />
+        <input class="slider" type="range" id="s-amp" min="0" max="1" step="0.01" value="0.5" />
       </div>
     </section>
 
@@ -297,15 +300,15 @@
 
     <section class="card card--pad">
       <div class="transport">
-        <button class="play" id="btn-play" aria-label="Play">
+        <button class="play" id="btn-play" aria-label="Play" disabled>
           <svg id="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
           <svg id="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
         </button>
-        <div class="wave-wrap" id="wave-wrap"><canvas id="wave"></canvas><div class="playhead" id="playhead"></div></div>
+        <div class="wave-wrap" id="wave-wrap"><canvas id="wave"></canvas><div class="playhead" id="playhead"></div><div class="wave-empty" id="wave-empty">Upload audio to play</div></div>
         <span class="time" id="time">0:00.00 / 0:00.00</span>
       </div>
       <div class="tfoot">
-        <span>Sample <b id="file-name">—</b></span>
+        <span>Sample <b id="file-name">none</b></span>
         <label><input type="file" id="file-input" accept="audio/*" /><span class="linklike">Upload your own audio…</span></label>
       </div>
     </section>
@@ -330,27 +333,24 @@
   let PATHS = {};
 
   const VOICES = [
-    { id:'willow',  label:'Willow',  wav:'01_Willow__ashley_v2.wav' },
-    { id:'spring',  label:'Spring',  wav:'02_Spring__autumn_v2.wav' },
-    { id:'cedar',   label:'Cedar',   wav:'07_Cedar__lamdavo_new.wav' },
-    { id:'river',   label:'River',   wav:'06_River__neil.wav' },
-    { id:'mist',    label:'Mist',    wav:'08_Mist__jason_new.wav' },
-    { id:'meadow',  label:'Meadow',  wav:'09_Meadow__monica_p.wav' },
-    { id:'ember',   label:'Ember',   wav:'01_Willow__ashley_v2.wav' },
-    { id:'flint',   label:'Flint',   wav:'04_Granite__daniel_v2.wav' },
-    { id:'hazel',   label:'Hazel',   wav:'02_Spring__autumn_v2.wav' },
-    { id:'canyon',  label:'Canyon',  wav:'05_Pine__rory_v2.wav',      legacy:true },
-    { id:'dawn',    label:'Dawn',    wav:'09_Meadow__monica_p.wav',   legacy:true },
-    { id:'granite', label:'Granite', wav:'04_Granite__daniel_v2.wav', legacy:true },
-    { id:'maple',   label:'Maple',   wav:'03_Cedar__lamdavo_v2.wav',  legacy:true },
+    { id:'willow',  label:'Willow', },
+    { id:'spring',  label:'Spring', },
+    { id:'cedar',   label:'Cedar', },
+    { id:'river',   label:'River', },
+    { id:'mist',    label:'Mist', },
+    { id:'meadow',  label:'Meadow', },
+    { id:'ember',   label:'Ember', },
+    { id:'flint',   label:'Flint', },
+    { id:'hazel',   label:'Hazel', },
+    { id:'canyon',  label:'Canyon', legacy:true },
+    { id:'dawn',    label:'Dawn', legacy:true },
+    { id:'granite', label:'Granite', legacy:true },
+    { id:'maple',   label:'Maple', legacy:true },
   ];
-  const SAMPLES = [
-    ['01_Willow__ashley_v2.wav','Willow · ashley v2'], ['02_Spring__autumn_v2.wav','Spring · autumn v2'],
-    ['03_Cedar__lamdavo_v2.wav','Cedar · lamdavo v2'], ['07_Cedar__lamdavo_new.wav','Cedar · lamdavo new'],
-    ['04_Granite__daniel_v2.wav','Granite · daniel v2'], ['05_Pine__rory_v2.wav','Pine · rory v2'],
-    ['06_River__neil.wav','River · neil'], ['08_Mist__jason_new.wav','Mist · jason new'],
-    ['09_Meadow__monica_p.wav','Meadow · monica p'],
-  ];
+  // Bundled samples are off for now. To bring them back, put the files in
+  // voice-lab/audio/ and list them here as ['file.wav', 'Label']; their envelopes
+  // are computed in the browser, the same way an upload's are.
+  const SAMPLES = [];
   const TRIMS = ['#8A4D75','#00ADF4','#C46507','#D4574A','#598672','#7A832E'];
   const THEME = { light:{stage:'#FFFDFA', wave:'#DDDAD1'}, dark:{stage:'#1A1918', wave:'#272725'} };
 
@@ -361,7 +361,7 @@
   const NOISE_SPEED = 1.1; // over time
   const SEED = 42;
 
-  const S = { voice:VOICES[0], sample:VOICES[0].wav, driveAudio:true, manualAmp:.5,
+  const S = { voice:VOICES[0], sample:null, driveAudio:false, manualAmp:.5,
               gain:1.4, attack:40, release:180, floor:.04, curve:'linear',
               trim:TRIMS[0], theme:'light', live:false, voiceMode:false };
 
@@ -382,11 +382,24 @@
   }
 
   // ---------------- envelopes ----------------
-  let ENVS={}, currentEnv=null, customEnvs={};
-  Promise.all([
-    fetch('./paths.json').then(r=>r.json()).catch(()=>({})),
-    fetch('./envelopes.json').then(r=>r.json()).catch(()=>({})),
-  ]).then(([p,e])=>{ PATHS=p; ENVS=e; setSample(S.sample); });
+  let currentEnv=null, envCache={};
+  fetch('./paths.json').then(r=>r.json()).catch(()=>({}))
+    .then(p=>{ PATHS=p; setSample(S.sample); });
+
+  // 60 fps RMS loudness curve, peak-normalised. Used for both uploads and any
+  // bundled samples, so nothing precomputed has to ship with the page.
+  async function envelopeOf(arrayBuffer){
+    const ac=new (window.AudioContext||window.webkitAudioContext)();
+    try{
+      const buf=await ac.decodeAudioData(arrayBuffer);
+      const ch=buf.getChannelData(0), fps=60, win=Math.floor(buf.sampleRate/fps), env=[];
+      for(let i=0;i<ch.length;i+=win){ let s=0,n=0;
+        for(let k=i;k<Math.min(ch.length,i+win);k++){ s+=ch[k]*ch[k]; n++; }
+        env.push(Math.sqrt(s/Math.max(1,n))); }
+      const peak=Math.max(...env)||1;
+      return { fps, env:env.map(v=>+(v/peak).toFixed(3)), duration_s:buf.duration };
+    } finally { ac.close(); }
+  }
 
   const envAt = t => { if(!currentEnv) return 0;
     const i=Math.min(currentEnv.env.length-1, Math.max(0, Math.floor(t*currentEnv.fps)));
@@ -803,10 +816,23 @@
   const fmt = t => { if(!isFinite(t)) t=0; const m=Math.floor(t/60), s=t-m*60; return m+':'+(s<10?'0':'')+s.toFixed(2); };
 
   // ---------------- audio ----------------
-  function setSample(name){
-    S.sample=name;
-    if(customEnvs[name]){ currentEnv=customEnvs[name]; audio.src=name; $('file-name').textContent=customEnvs[name].label; }
-    else { currentEnv=ENVS[name]||null; audio.src='./audio/'+name; $('file-name').textContent=name; }
+  // key: an uploaded clip's object URL, a bundled file name, or null for none
+  async function setSample(key){
+    S.sample=key;
+    const has=!!key;
+    $('btn-play').disabled=!has;
+    $('wave-empty').hidden=has;
+    if(!has){
+      audio.pause(); audio.removeAttribute('src'); audio.load();
+      currentEnv=null; $('file-name').textContent='none';
+      drawWave(); drawPlayhead(); return;
+    }
+    if(!envCache[key]){      // bundled sample: fetch and measure it once
+      try{ envCache[key]={ ...(await envelopeOf(await (await fetch('./audio/'+key)).arrayBuffer())), label:key, src:'./audio/'+key }; }
+      catch(err){ envCache[key]={ fps:60, env:[], duration_s:0, label:key, src:'./audio/'+key }; }
+    }
+    const e=envCache[key];
+    currentEnv=e; audio.src=e.src; $('file-name').textContent=e.label;
     audio.load(); drawWave(); drawPlayhead();
   }
   $('btn-play').addEventListener('click', ()=>{ if(S.voiceMode) exitVoiceMode(); audio.paused ? audio.play() : audio.pause(); });
@@ -817,23 +843,21 @@
   audio.addEventListener('seeked', drawPlayhead);
   waveWrap.addEventListener('click', e=>{
     const r=waveWrap.getBoundingClientRect();
+    if(!S.sample){ $('file-input').click(); return; }   // empty state: click to upload
     if(audio.duration) audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
     drawPlayhead();
   });
   $('file-input').addEventListener('change', async e=>{
     const f=e.target.files[0]; if(!f) return;
     const url=URL.createObjectURL(f);
-    try{
-      const ac=new (window.AudioContext||window.webkitAudioContext)();
-      const buf=await ac.decodeAudioData(await f.arrayBuffer());
-      const ch=buf.getChannelData(0), fps=60, win=Math.floor(buf.sampleRate/fps), env=[];
-      for(let i=0;i<ch.length;i+=win){ let s=0,n=0; for(let k=i;k<Math.min(ch.length,i+win);k++){s+=ch[k]*ch[k];n++;} env.push(Math.sqrt(s/Math.max(1,n))); }
-      const peak=Math.max(...env)||1; for(let i=0;i<env.length;i++) env[i]=+(env[i]/peak).toFixed(3);
-      customEnvs[url]={fps,env,duration_s:buf.duration,label:f.name}; ac.close();
-    }catch(err){ customEnvs[url]={fps:60,env:[],duration_s:0,label:f.name}; }
+    try{ envCache[url]={ ...(await envelopeOf(await f.arrayBuffer())), label:f.name, src:url }; }
+    catch(err){ envCache[url]={ fps:60, env:[], duration_s:0, label:f.name, src:url }; }
+    $('grp-sample').hidden=false;
+    if(!S.driveAudio) $('tg-audio').click();   // a clip was loaded to drive the path
     let opt=$('audio-select').querySelector('option[value="__custom__"]');
     if(!opt){ opt=document.createElement('option'); opt.value='__custom__'; $('audio-select').appendChild(opt); }
     opt.textContent='Uploaded · '+f.name; opt.dataset.url=url; $('audio-select').value='__custom__';
+    e.target.value='';
     setSample(url);
   });
 
@@ -846,12 +870,13 @@
     b.addEventListener('click',()=>{
       S.voice=v; voicesEl.querySelectorAll('.voice').forEach(x=>x.classList.toggle('is-on',x===b));
       $('badge-voice').textContent=v.label; $('badge-file').textContent=v.id+' · path';
-      if(!customEnvs[S.sample]){ setSample(v.wav); $('audio-select').value=v.wav; }
     });
     voicesEl.appendChild(b);
   });
   SAMPLES.forEach(([f,l])=>{ const o=document.createElement('option'); o.value=f; o.textContent=l; $('audio-select').appendChild(o); });
-  $('audio-select').value=S.sample;
+  if(SAMPLES.length){ $('grp-sample').hidden=false; S.sample=SAMPLES[0][0]; S.driveAudio=true;
+    $('tg-audio').classList.add('is-on'); $('tg-audio').setAttribute('aria-checked','true'); $('s-amp').disabled=true; }
+  $('audio-select').value=S.sample||'';
   $('audio-select').addEventListener('change', e=>{
     const v=e.target.value; setSample(v==='__custom__' ? e.target.selectedOptions[0].dataset.url : v);
   });
