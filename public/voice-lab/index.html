@@ -222,8 +222,8 @@
       <div class="row"><span class="label">Drive from audio</span>
         <button class="toggle" id="tg-audio" role="switch" aria-checked="false"></button></div>
       <div class="group" style="margin-top:16px">
-        <div class="row"><span class="label">Amplitude</span><span class="value" id="v-amp">0.50</span></div>
-        <input class="slider" type="range" id="s-amp" min="0" max="1" step="0.01" value="0.5" />
+        <div class="row"><span class="label">Live</span><span class="value" id="v-live">0.00</span></div>
+        <div class="meter"><div class="meter__fill" id="meter"></div></div>
       </div>
     </section>
 
@@ -252,10 +252,6 @@
           <button class="seg__opt is-on" data-v="linear" title="Linear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 19L20 5"/></svg></button>
           <button class="seg__opt" data-v="punchy" title="Punchy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 19C4 11 12 5 20 5"/></svg></button>
         </div>
-      </div>
-      <div class="group">
-        <div class="row"><span class="label">Live</span><span class="value" id="v-live">0.00</span></div>
-        <div class="meter"><div class="meter__fill" id="meter"></div></div>
       </div>
     </section>
 
@@ -350,7 +346,7 @@
   // Bundled samples are off for now. To bring them back, put the files in
   // voice-lab/audio/ and list them here as ['file.wav', 'Label']; their envelopes
   // are computed in the browser, the same way an upload's are.
-  const SAMPLES = [];
+  const SAMPLES = [['sample.m4a', 'sample_audio']];
   const TRIMS = ['#8A4D75','#00ADF4','#C46507','#D4574A','#598672','#7A832E'];
   const THEME = { light:{stage:'#FFFDFA', wave:'#DDDAD1'}, dark:{stage:'#1A1918', wave:'#272725'} };
 
@@ -361,7 +357,7 @@
   const NOISE_SPEED = 1.1; // over time
   const SEED = 42;
 
-  const S = { voice:VOICES[0], sample:null, driveAudio:false, manualAmp:.5,
+  const S = { voice:VOICES[0], sample:null, driveAudio:false, manualAmp:0,
               gain:1.4, attack:40, release:180, floor:.04, curve:'linear',
               trim:TRIMS[0], theme:'light', live:false, voiceMode:false };
 
@@ -816,6 +812,8 @@
   const fmt = t => { if(!isFinite(t)) t=0; const m=Math.floor(t/60), s=t-m*60; return m+':'+(s<10?'0':'')+s.toFixed(2); };
 
   // ---------------- audio ----------------
+  const sampleLabel = k => (SAMPLES.find(x=>x[0]===k)||[k,k])[1];
+
   // key: an uploaded clip's object URL, a bundled file name, or null for none
   async function setSample(key){
     S.sample=key;
@@ -828,8 +826,8 @@
       drawWave(); drawPlayhead(); return;
     }
     if(!envCache[key]){      // bundled sample: fetch and measure it once
-      try{ envCache[key]={ ...(await envelopeOf(await (await fetch('./audio/'+key)).arrayBuffer())), label:key, src:'./audio/'+key }; }
-      catch(err){ envCache[key]={ fps:60, env:[], duration_s:0, label:key, src:'./audio/'+key }; }
+      try{ envCache[key]={ ...(await envelopeOf(await (await fetch('./audio/'+key)).arrayBuffer())), label:sampleLabel(key), src:'./audio/'+key }; }
+      catch(err){ envCache[key]={ fps:60, env:[], duration_s:0, label:sampleLabel(key), src:'./audio/'+key }; }
     }
     const e=envCache[key];
     currentEnv=e; audio.src=e.src; $('file-name').textContent=e.label;
@@ -874,8 +872,9 @@
     voicesEl.appendChild(b);
   });
   SAMPLES.forEach(([f,l])=>{ const o=document.createElement('option'); o.value=f; o.textContent=l; $('audio-select').appendChild(o); });
-  if(SAMPLES.length){ $('grp-sample').hidden=false; S.sample=SAMPLES[0][0]; S.driveAudio=true;
-    $('tg-audio').classList.add('is-on'); $('tg-audio').setAttribute('aria-checked','true'); $('s-amp').disabled=true; }
+  if(SAMPLES.length){ S.sample=SAMPLES[0][0]; S.driveAudio=true;
+    $('tg-audio').classList.add('is-on'); $('tg-audio').setAttribute('aria-checked','true'); }
+  if(SAMPLES.length>1) $('grp-sample').hidden=false;
   $('audio-select').value=S.sample||'';
   $('audio-select').addEventListener('change', e=>{
     const v=e.target.value; setSample(v==='__custom__' ? e.target.selectedOptions[0].dataset.url : v);
@@ -903,11 +902,6 @@
     const paint=()=>{ el.style.setProperty('--p',((el.value-el.min)/(el.max-el.min)*100)+'%'); out.textContent=fmtFn(+el.value); };
     el.addEventListener('input',()=>{ S[key]=+el.value; paint(); }); paint();
   };
-  bindSlider('s-amp','manualAmp',v=>v.toFixed(2),'v-amp');
-  // reaching for Amplitude means you want to set it by hand
-  $('s-amp').addEventListener('pointerdown',()=>{
-    if(S.driveAudio) $('tg-audio').click();
-  });
   bindSlider('s-gain','gain',v=>v.toFixed(2).replace(/0$/,'')+'×','v-gain');
   bindSlider('s-attack','attack',v=>v+' ms','v-attack');
   bindSlider('s-release','release',v=>v+' ms','v-release');
@@ -916,7 +910,6 @@
     S.driveAudio=!S.driveAudio;
     $('tg-audio').classList.toggle('is-on',S.driveAudio);
     $('tg-audio').setAttribute('aria-checked',String(S.driveAudio));
-    $('s-amp').disabled=S.driveAudio;
   });
   $('seg-curve').querySelectorAll('.seg__opt').forEach(b=>b.addEventListener('click',()=>{
     $('seg-curve').querySelectorAll('.seg__opt').forEach(x=>x.classList.toggle('is-on',x===b));
