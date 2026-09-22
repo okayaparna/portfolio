@@ -1,0 +1,8 @@
+# Rebuildable intermediates and the raw source photo stay out of git.
+*.blend
+*.blend1
+photos/
+
+# Mixamo source files: usable in the site, not for redistribution in a public repo
+*.fbx
+mixamo/

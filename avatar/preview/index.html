@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Avatar preview</title>
+<style>
+  :root { --bg: #FBFAF7; --ink: #6B5F76; --muted: #A89FB0; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 520px); min-height: 100%; }
+  #stage { height: 100vh; position: sticky; top: 0; }
+  aside { padding: 48px 40px; display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+  h1 { font-weight: 500; font-size: 28px; margin: 0; }
+  p { margin: 0; color: var(--muted); }
+  button { font: inherit; color: var(--ink); background: none; border: 1px solid #D8C7E4; border-radius: 999px; padding: 6px 14px; cursor: pointer; margin-right: 6px; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } #stage { height: 75vh; position: relative; } aside { padding: 24px 16px; } }
+</style>
+</head>
+<body>
+<main>
+  <div id="stage"></div>
+  <aside>
+    <h1>About</h1>
+    <p>Preview of the Framer component. Move the cursor, drag the figure, click to wave.</p>
+    <div>
+      <button id="replay">Replay load-in</button>
+      <button data-f="full">Full body</button><button data-f="waist">Waist up</button><button data-f="portrait">Portrait</button>
+    </div>
+  </aside>
+</main>
+<script type="module">
+  import { mountAvatar } from '../../framer/AboutAvatar.tsx'
+  const a = mountAvatar(document.getElementById('stage'), {
+    modelUrl: '/aparna.glb', framing: 'full', start: 'load', delay: 0.3, assembleDuration: 2.4, skinDuration: 1.8,
+    scatter: 0.9, polyColor: '#D8C7E4', edgeColor: '#6B5F76', edgeOpacity: 0.55, lookStrength: 1,
+    draggable: true, waveOnClick: true, shadow: 0.6,
+  })
+  window.avatar = a
+  document.getElementById('replay').onclick = () => a.replay()
+  document.querySelectorAll('[data-f]').forEach(b => b.onclick = () => a.setOptions({ framing: b.dataset.f }))
+</script>
+</body>
+</html>
